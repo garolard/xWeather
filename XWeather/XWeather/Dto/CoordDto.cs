@@ -1,4 +1,5 @@
 ﻿using MvvmCross.Core.ViewModels;
+using XWeather.Entities;
 
 namespace XWeather.Dto
 {
@@ -7,6 +8,16 @@ namespace XWeather.Dto
         private double _longitude;
         private double _latitude;
 
+        public CoordDto()
+        {
+            
+        }
+
+        public CoordDto(Coord coord)
+        {
+            Longitude = coord.lon;
+            Latitude = coord.lat;
+        }
 
         public double Longitude
         {

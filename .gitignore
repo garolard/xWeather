@@ -243,3 +243,5 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+
+./XWeather/XWeather/ApiConstants.cs

@@ -1,4 +1,5 @@
 ﻿using MvvmCross.Core.ViewModels;
+using XWeather.Entities;
 
 namespace XWeather.Dto
 {
@@ -6,6 +7,17 @@ namespace XWeather.Dto
     {
         private double _speed;
         private int _deg;
+
+        public WindDto()
+        {
+            
+        }
+
+        public WindDto(Wind wind)
+        {
+            Speed = wind.speed;
+            Deg = wind.deg;
+        }
 
         public double Speed
         {

@@ -1,4 +1,5 @@
 ﻿using MvvmCross.Core.ViewModels;
+using XWeather.Entities;
 
 namespace XWeather.Dto
 {
@@ -10,6 +11,21 @@ namespace XWeather.Dto
         private string _country;
         private int _sunrise;
         private int _sunset;
+
+        public SysDto()
+        {
+            
+        }
+
+        public SysDto(Sys sys)
+        {
+            Type = sys.type;
+            Id = sys.id;
+            Message = sys.message;
+            Country = sys.country;
+            Sunrise = sys.sunrise;
+            Sunset = sys.sunset;
+        }
 
         public int Type
         {
