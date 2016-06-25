@@ -1,4 +1,5 @@
 ﻿using MvvmCross.Core.ViewModels;
+using XWeather.Entities;
 
 namespace XWeather.Dto
 {
@@ -9,6 +10,20 @@ namespace XWeather.Dto
         private int _humidity;
         private double _tempMin;
         private double _tempMax;
+
+        public MainDto()
+        {
+            
+        }
+
+        public MainDto(Main main)
+        {
+            Temp = main.temp;
+            Pressure = main.pressure;
+            Humidity = main.humidity;
+            TempMin = main.temp_min;
+            TempMax = main.temp_max;
+        }
 
         public double Temp
         {

@@ -21,15 +21,17 @@ namespace XWeather.WeatherApi.Http
 
         public static HttpProxy Instance => _instance ?? (_instance = new HttpProxy());
 
-        public async Task<string> Get(string targetUri, CancellationTokenSource cts)
+        public async Task<string> GetAsync(string targetUri, CancellationTokenSource cts)
         {
-            var response = await _client.GetAsync(targetUri, cts.Token);
+            var localCancellationTokenSource = cts ?? new CancellationTokenSource();
+            var response = await _client.GetAsync(targetUri, localCancellationTokenSource.Token);
             return await response.Content.ReadAsStringAsync();
         }
 
-        public async Task<string> Post(string targetUri, HttpContent postContent, CancellationTokenSource cts)
+        public async Task<string> PostAsync(string targetUri, HttpContent postContent, CancellationTokenSource cts)
         {
-            var response = await _client.PostAsync(targetUri, postContent, cts.Token);
+            var localCancellationTokenSource = cts ?? new CancellationTokenSource();
+            var response = await _client.PostAsync(targetUri, postContent, localCancellationTokenSource.Token);
             return await response.Content.ReadAsStringAsync();
         }
     }

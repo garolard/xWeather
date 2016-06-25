@@ -1,4 +1,5 @@
 ﻿using MvvmCross.Core.ViewModels;
+using XWeather.Entities;
 
 namespace XWeather.Dto
 {
@@ -8,6 +9,19 @@ namespace XWeather.Dto
         private string _main;
         private string _description;
         private string _icon;
+
+        public WeatherDto()
+        {
+            
+        }
+
+        public WeatherDto(Weather weather)
+        {
+            Id = weather.id;
+            Main = weather.main;
+            Description = weather.description;
+            Icon = weather.icon;
+        }
 
         public int Id
         {

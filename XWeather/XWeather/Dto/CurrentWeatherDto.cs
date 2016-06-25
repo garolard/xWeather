@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using MvvmCross.Core.ViewModels;
+using XWeather.Entities;
 
 namespace XWeather.Dto
 {
@@ -16,6 +17,30 @@ namespace XWeather.Dto
         private int _id;
         private string _name;
         private int _cod;
+
+        public CurrentWeatherDto()
+        {
+            
+        }
+
+        public CurrentWeatherDto(CurrentWeather currentWeather)
+        {
+            Coordinates = new CoordDto(currentWeather.coord);
+            Base = currentWeather.@base;
+            Main = new MainDto(currentWeather.main);
+            Wind = new WindDto(currentWeather.wind);
+            Clouds = new CloudsDto(currentWeather.clouds);
+            Dt = currentWeather.dt;
+            Sys = new SysDto(currentWeather.sys);
+            Id = currentWeather.id;
+            Name = currentWeather.name;
+            Code = currentWeather.cod;
+            Weather = new List<WeatherDto>();
+            foreach (var weather in currentWeather.weather)
+            {
+                Weather.Add(new WeatherDto(weather));
+            }
+        }
 
         public CoordDto Coordinates
         {
