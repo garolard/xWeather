@@ -1,4 +1,6 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using ModernHttpClient;
 
@@ -11,20 +13,23 @@ namespace XWeather.WeatherApi.Http
 
         private HttpProxy()
         {
-            _client = new HttpClient(new NativeMessageHandler());
+            _client = new HttpClient(new NativeMessageHandler())
+            {
+                BaseAddress = new Uri(ApiConstants.WeatherBaseUri + ApiConstants.WeatherApiVersion + "/")
+            };
         }
 
         public static HttpProxy Instance => _instance ?? (_instance = new HttpProxy());
 
-        public async Task<string> Get(string targetUri)
+        public async Task<string> Get(string targetUri, CancellationTokenSource cts)
         {
-            var response = await _client.GetAsync(targetUri);
+            var response = await _client.GetAsync(targetUri, cts.Token);
             return await response.Content.ReadAsStringAsync();
         }
 
-        public async Task<string> Post(string targetUri, HttpContent postContent)
+        public async Task<string> Post(string targetUri, HttpContent postContent, CancellationTokenSource cts)
         {
-            var response = await _client.PostAsync(targetUri, postContent);
+            var response = await _client.PostAsync(targetUri, postContent, cts.Token);
             return await response.Content.ReadAsStringAsync();
         }
     }
