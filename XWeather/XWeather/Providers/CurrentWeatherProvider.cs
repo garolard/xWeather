@@ -14,6 +14,9 @@ namespace XWeather.Providers
     {
         public async Task<CurrentWeatherDto> FindForCityCode(string cityCode, CancellationTokenSource cts)
         {
+            if (cts == null)
+                cts = new CancellationTokenSource();
+
             const string endpoint = "weather";
             string query;
             using (var content = new FormUrlEncodedContent(new []
@@ -25,8 +28,7 @@ namespace XWeather.Providers
                 query = await content.ReadAsStringAsync();
             }
 
-
-            var weather = await HttpProxy.Instance.GetAsync(endpoint + "?" + query, null);
+            var weather = await HttpProxy.Instance.GetAsync(endpoint + "?" + query, cts.Token);
             var weatherEntity = JsonConvert.DeserializeObject<CurrentWeather>(weather);
 
             if (weatherEntity.cod == 404)
@@ -37,6 +39,9 @@ namespace XWeather.Providers
 
         public async Task<CurrentWeatherDto> FindForCityName(string cityName, CancellationTokenSource cts)
         {
+            if (cts == null)
+                cts = new CancellationTokenSource();
+
             const string endpoint = "weather";
             string query;
             using (var content = new FormUrlEncodedContent(new[]
@@ -49,7 +54,7 @@ namespace XWeather.Providers
             }
 
 
-            var weather = await HttpProxy.Instance.GetAsync(endpoint + "?" + query, null);
+            var weather = await HttpProxy.Instance.GetAsync(endpoint + "?" + query, cts.Token);
             var weatherEntity = JsonConvert.DeserializeObject<CurrentWeather>(weather);
 
             if (weatherEntity.cod == 404)
