@@ -6,7 +6,7 @@ namespace XWeather.Providers
 {
     public interface ICurrentWeatherProvider
     {
-        Task<CurrentWeatherDto> FindForCityCode(string cityCode, CancellationTokenSource cts);
-        Task<CurrentWeatherDto> FindForCityName(string cityName, CancellationTokenSource cts);
+        Task<CurrentWeatherDto> FindForCityCodeAsync(string cityCode, string units, CancellationTokenSource cts);
+        Task<CurrentWeatherDto> FindForCityNameAsync(string cityName, string units,  CancellationTokenSource cts);
     }
 }

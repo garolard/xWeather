@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\CurrentWeatherProviderTests.cs" />
+    <Compile Include="Providers\ForecastProviderTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

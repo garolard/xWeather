@@ -6,7 +6,7 @@ namespace XWeather.Dto
     public class WindDto : MvxViewModel
     {
         private double _speed;
-        private int _deg;
+        private double _deg;
 
         public WindDto()
         {
@@ -25,7 +25,7 @@ namespace XWeather.Dto
             set { _speed = value; RaisePropertyChanged(); }
         }
 
-        public int Deg
+        public double Deg
         {
             get { return _deg; }
             set { _deg = value; RaisePropertyChanged(); }

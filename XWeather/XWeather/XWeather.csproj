@@ -34,24 +34,31 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ApiConstants.cs" />
+    <Compile Include="Dto\CityDto.cs" />
     <Compile Include="Dto\CloudsDto.cs" />
     <Compile Include="Dto\CoordDto.cs" />
     <Compile Include="Dto\CurrentWeatherDto.cs" />
+    <Compile Include="Dto\ForecastDto.cs" />
     <Compile Include="Dto\MainDto.cs" />
     <Compile Include="Dto\SysDto.cs" />
     <Compile Include="Dto\WeatherDto.cs" />
     <Compile Include="Dto\WindDto.cs" />
+    <Compile Include="Entities\City.cs" />
     <Compile Include="Entities\Clouds.cs" />
     <Compile Include="Entities\Coord.cs" />
     <Compile Include="Entities\CurrentWeather.cs" />
+    <Compile Include="Entities\Forecast.cs" />
     <Compile Include="Entities\Main.cs" />
     <Compile Include="Entities\Sys.cs" />
     <Compile Include="Entities\Weather.cs" />
     <Compile Include="Entities\Wind.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\CurrentWeatherProvider.cs" />
+    <Compile Include="Providers\ForecastProvider.cs" />
     <Compile Include="Providers\ICurrentWeatherProvider.cs" />
+    <Compile Include="Providers\IForecastProvider.cs" />
     <Compile Include="WeatherApi\Http\HttpProxy.cs" />
+    <Compile Include="WeatherApi\StatusResponses\ErrorResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="HttpParamsUtility, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">

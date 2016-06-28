@@ -12,7 +12,7 @@ namespace XWeather.Tests.Providers
         public async Task CurrentWeather_NoCityNameProvided_ShouldReturnNull()
         {
             var provider = new CurrentWeatherProvider();
-            var currentWeather = await provider.FindForCityName(string.Empty, null);
+            var currentWeather = await provider.FindForCityNameAsync(string.Empty);
             Assert.AreEqual(null, currentWeather);
         }
 
@@ -20,7 +20,7 @@ namespace XWeather.Tests.Providers
         public async Task CurrenWeather_NoCityCodeProvided_ShouldReturnNull()
         {
             var provider = new CurrentWeatherProvider();
-            var currentWeather = await provider.FindForCityCode(string.Empty, null);
+            var currentWeather = await provider.FindForCityCodeAsync(string.Empty);
             Assert.AreEqual(null, currentWeather);
         }
 
@@ -28,7 +28,7 @@ namespace XWeather.Tests.Providers
         public async Task CurrentWeather_MadridCityNameProvided_ShouldReturnWeather()
         {
             var provider = new CurrentWeatherProvider();
-            var currentMadridWeather = await provider.FindForCityName("Madrid,ES", null);
+            var currentMadridWeather = await provider.FindForCityNameAsync("Madrid,ES");
             Assert.IsNotNull(currentMadridWeather);
         }
 
@@ -36,7 +36,7 @@ namespace XWeather.Tests.Providers
         public async Task CurrentWeather_MadridCityCodeProvided_ShouldReturnWeather()
         {
             var provider = new CurrentWeatherProvider();
-            var currentMadridWeather = await provider.FindForCityCode("6359304", null);
+            var currentMadridWeather = await provider.FindForCityCodeAsync("6359304");
             Assert.IsNotNull(currentMadridWeather);
         }
     }

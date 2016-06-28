@@ -6,8 +6,8 @@ namespace XWeather.Dto
     public class MainDto : MvxViewModel
     {
         private double _temp;
-        private int _pressure;
-        private int _humidity;
+        private double _pressure;
+        private double _humidity;
         private double _tempMin;
         private double _tempMax;
 
@@ -31,13 +31,13 @@ namespace XWeather.Dto
             set { _temp = value; RaisePropertyChanged(); }
         }
 
-        public int Pressure
+        public double Pressure
         {
             get { return _pressure; }
             set { _pressure = value; RaisePropertyChanged(); }
         }
 
-        public int Humidity
+        public double Humidity
         {
             get { return _humidity; }
             set { _humidity = value; RaisePropertyChanged(); }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using MvvmCross.Core.ViewModels;
 using XWeather.Entities;
 
@@ -25,13 +26,23 @@ namespace XWeather.Dto
 
         public CurrentWeatherDto(CurrentWeather currentWeather)
         {
-            Coordinates = new CoordDto(currentWeather.coord);
+            Coordinates = currentWeather.coord == null 
+                ? new CoordDto() 
+                : new CoordDto(currentWeather.coord);
             Base = currentWeather.@base;
-            Main = new MainDto(currentWeather.main);
-            Wind = new WindDto(currentWeather.wind);
-            Clouds = new CloudsDto(currentWeather.clouds);
+            Main = currentWeather.main == null 
+                ? new MainDto()
+                : new MainDto(currentWeather.main);
+            Wind = currentWeather.wind == null 
+                ? new WindDto()
+                : new WindDto(currentWeather.wind);
+            Clouds = currentWeather.clouds == null 
+                ? new CloudsDto()
+                : new CloudsDto(currentWeather.clouds);
             Dt = currentWeather.dt;
-            Sys = new SysDto(currentWeather.sys);
+            Sys = currentWeather.sys == null
+                ? new SysDto() 
+                : new SysDto(currentWeather.sys);
             Id = currentWeather.id;
             Name = currentWeather.name;
             Code = currentWeather.cod;
