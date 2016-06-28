@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,14 +10,14 @@ using XWeather.WeatherApi.StatusResponses;
 
 namespace XWeather.Providers
 {
-    public class CurrentWeatherProvider : ICurrentWeatherProvider
+    public class ForecastProvider : IForecastProvider
     {
-        public async Task<CurrentWeatherDto> FindForCityCodeAsync(string cityCode, string units = "", CancellationTokenSource cts = default(CancellationTokenSource))
+        public async Task<ForecastDto> FindForCityCodeAsync(string cityCode, string units = "", CancellationTokenSource cts = default(CancellationTokenSource))
         {
             if (cts == null)
                 cts = new CancellationTokenSource();
 
-            const string endpoint = "weather";
+            const string endpoint = "forecast";
             string query;
 
             var result = new List<KeyValuePair<string, string>>();
@@ -35,23 +34,23 @@ namespace XWeather.Providers
                 query = await content.ReadAsStringAsync();
             }
 
-            var weather = await HttpProxy.Instance.GetAsync(endpoint + "?" + query, cts.Token);
+            var forecast = await HttpProxy.Instance.GetAsync(endpoint + "?" + query, cts.Token);
 
-            var possibleErrorResponse = JsonConvert.DeserializeObject<ErrorResponse>(weather);
+            var possibleErrorResponse = JsonConvert.DeserializeObject<ErrorResponse>(forecast);
             if (possibleErrorResponse.cod == 404)
                 return null;
 
-            var weatherEntity = JsonConvert.DeserializeObject<CurrentWeather>(weather);
+            var forecastEntity = JsonConvert.DeserializeObject<Forecast>(forecast);
 
-            return new CurrentWeatherDto(weatherEntity);
+            return new ForecastDto(forecastEntity);
         }
-        
-        public async Task<CurrentWeatherDto> FindForCityNameAsync(string cityName, string units = "", CancellationTokenSource cts = default(CancellationTokenSource))
+
+        public async Task<ForecastDto> FindForCityNameAsync(string cityName, string units = "", CancellationTokenSource cts = default(CancellationTokenSource))
         {
             if (cts == null)
                 cts = new CancellationTokenSource();
 
-            const string endpoint = "weather";
+            const string endpoint = "forecast";
             string query;
 
             var result = new List<KeyValuePair<string, string>>();
@@ -68,16 +67,15 @@ namespace XWeather.Providers
                 query = await content.ReadAsStringAsync();
             }
 
+            var forecast = await HttpProxy.Instance.GetAsync(endpoint + "?" + query, cts.Token);
 
-            var weather = await HttpProxy.Instance.GetAsync(endpoint + "?" + query, cts.Token);
-
-            var possibleErrorResponse = JsonConvert.DeserializeObject<ErrorResponse>(weather);
+            var possibleErrorResponse = JsonConvert.DeserializeObject<ErrorResponse>(forecast);
             if (possibleErrorResponse.cod == 404)
                 return null;
 
-            var weatherEntity = JsonConvert.DeserializeObject<CurrentWeather>(weather);
+            var forecastEntity = JsonConvert.DeserializeObject<Forecast>(forecast);
 
-            return new CurrentWeatherDto(weatherEntity);
+            return new ForecastDto(forecastEntity);
         }
     }
 }
