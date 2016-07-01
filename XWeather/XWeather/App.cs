@@ -9,8 +9,8 @@ namespace XWeather
     {
         public App()
         {
-            Mvx.RegisterType<ICurrentWeatherProvider, CurrentWeatherProvider>();
-            Mvx.RegisterType<IForecastProvider, ForecastProvider>();
+            Mvx.RegisterSingleton<ICurrentWeatherProvider>(() => new CurrentWeatherProvider());
+            Mvx.RegisterSingleton<IForecastProvider>(() => new ForecastProvider());
 
             Mvx.RegisterSingleton<IMvxAppStart>(new MvxAppStart<MainViewModel>());
         }

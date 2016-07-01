@@ -6,8 +6,20 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="using:MvvmCross.WindowsUWP.Views"
-    mc:Ignorable="d">
+    xmlns:viewModels="using:XWeather.ViewModels"
+    mc:Ignorable="d"
+    d:DataContext="{StaticResource DesignViewModel}">
 
+    <views:MvxWindowsPage.Resources>
+        <viewModels:MainViewModel x:Key="DesignViewModel" />
+    </views:MvxWindowsPage.Resources>
+    
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel>
+            <TextBox Text="{Binding CityName, Mode=TwoWay}"/>
+            <Button Content="Get weather" Command="{Binding GetCurrentWeatherCommand}"/>
+            <TextBlock Margin="0 12 0 0" Text="{Binding CurrentWeather.Main.Temp}"/>
+            <TextBlock Margin="0 12 0 0" Text="{Binding CurrentWeather.Clouds.All}"/>
+        </StackPanel>
     </Grid>
 </views:MvxWindowsPage>
