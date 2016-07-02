@@ -13,12 +13,13 @@ namespace XWeather.Providers
 {
     public class CurrentWeatherProvider : ICurrentWeatherProvider
     {
-        public async Task<CurrentWeatherDto> FindForCityCodeAsync(string cityCode, string units = "", CancellationTokenSource cts = default(CancellationTokenSource))
-        {
-            if (cts == null)
-                cts = new CancellationTokenSource();
+        private const string Endpoint = "weather";
 
-            const string endpoint = "weather";
+        public async Task<CurrentWeatherDto> FindForCityCodeAsync(string cityCode, string units = "", CancellationTokenSource cancellationTokenSource = default(CancellationTokenSource))
+        {
+            if (cancellationTokenSource == null)
+                cancellationTokenSource = new CancellationTokenSource();
+
             string query;
 
             var result = new List<KeyValuePair<string, string>>();
@@ -35,7 +36,7 @@ namespace XWeather.Providers
                 query = await content.ReadAsStringAsync();
             }
 
-            var weather = await HttpProxy.Instance.GetAsync(endpoint + "?" + query, cts.Token);
+            var weather = await HttpProxy.Instance.GetAsync(Endpoint + "?" + query, cancellationTokenSource.Token);
 
             var possibleErrorResponse = JsonConvert.DeserializeObject<ErrorResponse>(weather);
             if (possibleErrorResponse.cod == 404)
@@ -46,12 +47,11 @@ namespace XWeather.Providers
             return new CurrentWeatherDto(weatherEntity);
         }
         
-        public async Task<CurrentWeatherDto> FindForCityNameAsync(string cityName, string units = "", CancellationTokenSource cts = default(CancellationTokenSource))
+        public async Task<CurrentWeatherDto> FindForCityNameAsync(string cityName, string units = "", CancellationTokenSource cancellationTokenSource = default(CancellationTokenSource))
         {
-            if (cts == null)
-                cts = new CancellationTokenSource();
+            if (cancellationTokenSource == null)
+                cancellationTokenSource = new CancellationTokenSource();
 
-            const string endpoint = "weather";
             string query;
 
             var result = new List<KeyValuePair<string, string>>();
@@ -69,7 +69,38 @@ namespace XWeather.Providers
             }
 
 
-            var weather = await HttpProxy.Instance.GetAsync(endpoint + "?" + query, cts.Token);
+            var weather = await HttpProxy.Instance.GetAsync(Endpoint + "?" + query, cancellationTokenSource.Token);
+
+            var possibleErrorResponse = JsonConvert.DeserializeObject<ErrorResponse>(weather);
+            if (possibleErrorResponse.cod == 404)
+                return null;
+
+            var weatherEntity = JsonConvert.DeserializeObject<CurrentWeather>(weather);
+
+            return new CurrentWeatherDto(weatherEntity);
+        }
+
+        public async Task<CurrentWeatherDto> FindForCoordinatesAsync(double latitude, double longitude, string units = "", CancellationTokenSource cancellationTokenSource = default(CancellationTokenSource))
+        {
+            if (cancellationTokenSource == null)
+                cancellationTokenSource = new CancellationTokenSource();
+
+            string query;
+
+            var result = new List<KeyValuePair<string, string>>();
+
+            result.Add(new KeyValuePair<string, string>("lat", latitude.ToString()));
+            result.Add(new KeyValuePair<string, string>("lon", longitude.ToString()));
+            if (!string.IsNullOrEmpty(units))
+                result.Add(new KeyValuePair<string, string>("units", units));
+            result.Add(new KeyValuePair<string, string>("appid", ApiConstants.WeatherApiKey));
+
+            using (var content = new FormUrlEncodedContent(result.ToArray()))
+            {
+                query = await content.ReadAsStringAsync();
+            }
+
+            var weather = await HttpProxy.Instance.GetAsync(Endpoint + "?" + query, cancellationTokenSource.Token);
 
             var possibleErrorResponse = JsonConvert.DeserializeObject<ErrorResponse>(weather);
             if (possibleErrorResponse.cod == 404)

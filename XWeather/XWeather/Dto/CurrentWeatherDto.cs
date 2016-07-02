@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using MvvmCross.Core.ViewModels;
 using XWeather.Entities;
 
