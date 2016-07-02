@@ -97,7 +97,7 @@ namespace XWeather.Providers
 
             using (var content = new FormUrlEncodedContent(result.ToArray()))
             {
-                query = content.ToString();
+                query = await content.ReadAsStringAsync();
             }
 
             var weather = await HttpProxy.Instance.GetAsync(Endpoint + "?" + query, cancellationTokenSource.Token);

@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
+    <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
@@ -59,6 +59,7 @@
     <Compile Include="Providers\ForecastProvider.cs" />
     <Compile Include="Providers\ICurrentWeatherProvider.cs" />
     <Compile Include="Providers\IForecastProvider.cs" />
+    <Compile Include="Providers\ILocationProvider.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="WeatherApi\Http\HttpProxy.cs" />
     <Compile Include="WeatherApi\StatusResponses\ErrorResponse.cs" />

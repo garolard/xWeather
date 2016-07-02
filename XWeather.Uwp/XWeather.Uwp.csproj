@@ -99,6 +99,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\UwpLocationProvider.cs" />
     <Compile Include="Setup.cs" />
   </ItemGroup>
   <ItemGroup>

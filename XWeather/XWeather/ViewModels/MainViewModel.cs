@@ -12,6 +12,7 @@ namespace XWeather.ViewModels
     public class MainViewModel : MvxViewModel
     {
         private readonly ICurrentWeatherProvider _weatherProvider;
+        private readonly ILocationProvider _locationProvider;
         private readonly IMvxMessenger _messenger;
 
         private string _cityName;
@@ -21,6 +22,7 @@ namespace XWeather.ViewModels
         public MainViewModel()
         {
             _weatherProvider = Mvx.Resolve<ICurrentWeatherProvider>();
+            _locationProvider = Mvx.Resolve<ILocationProvider>();
             _messenger = Mvx.Resolve<IMvxMessenger>();
 
             CurrentWeather = new CurrentWeatherDto();
@@ -47,10 +49,17 @@ namespace XWeather.ViewModels
         public IMvxCommand SendChangeBackgroundMessageCommand { get; }
 
 
+        public void Init()
+        {
+            GetCurrentWeatherCommand.Execute();
+        }
+
+
         private async Task GetCurrentWeatherAsync()
         {
+            var currentLocation = await _locationProvider.GetCurrentLocationAsync();
             CurrentWeather =
-                await _weatherProvider.FindForCityNameAsync(CityName, "metric", new CancellationTokenSource());
+                await _weatherProvider.FindForCoordinatesAsync(currentLocation.Latitude, currentLocation.Longitude, "metric", new CancellationTokenSource());
             if (CurrentWeather != null)
                 SendChangeBackgroundMessageCommand.Execute();
         }

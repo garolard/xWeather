@@ -30,7 +30,15 @@ namespace XWeather.Uwp
 
             if (clouds < 25)
             {
-                //RootContainer.Background = Application.Current.Resources["SunnyBrush"] as SolidColorBrush;
+                RootContainer.Background = Application.Current.Resources["SunnyBrush"] as SolidColorBrush;
+            }
+            else if (clouds >= 25 && clouds < 75)
+            {
+                RootContainer.Background = Application.Current.Resources["PatlyCloudyBrush"] as SolidColorBrush;
+            }
+            else
+            {
+                RootContainer.Background = Application.Current.Resources["CloudyBrush"] as SolidColorBrush;
             }
         }
     }

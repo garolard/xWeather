@@ -15,7 +15,7 @@
     </views:MvxWindowsPage.Resources>
     
     <RelativePanel x:Name="RootContainer" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock x:Name="CurrentTemperature" TextWrapping="Wrap" Text="{Binding CurrentWeather.Main.Temperature}" Style="{StaticResource HeaderTextBlockStyle}" FontSize="72" Margin="80,160,0,0"/>
+        <TextBlock x:Name="CurrentTemperature" TextWrapping="Wrap" Text="{Binding CurrentWeather.Main.Temp}" Style="{StaticResource HeaderTextBlockStyle}" FontSize="72" Margin="80,160,0,0"/>
         <TextBlock x:Name="DetectedCity" TextWrapping="Wrap" Text="{Binding CurrentWeather.Name}" Margin="80,0,0,0" RelativePanel.Below="CurrentTemperature" RelativePanel.AlignLeftWith="CurrentTemperature" Style="{StaticResource TitleTextBlockStyle}" />
     </RelativePanel>
 </views:MvxWindowsPage>

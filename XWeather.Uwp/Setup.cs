@@ -1,7 +1,10 @@
 ﻿using Windows.UI.Xaml.Controls;
 using MvvmCross.Core.ViewModels;
+using MvvmCross.Platform;
 using MvvmCross.WindowsUWP.Platform;
 using MvvmCross.WindowsUWP.Views;
+using XWeather.Providers;
+using XWeather.Uwp.Providers;
 
 namespace XWeather.Uwp
 {
@@ -17,6 +20,7 @@ namespace XWeather.Uwp
 
         protected override IMvxApplication CreateApp()
         {
+            Mvx.RegisterSingleton<ILocationProvider>(() => new UwpLocationProvider());
             return new XWeather.App();
         }
 
