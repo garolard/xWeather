@@ -13,7 +13,7 @@ namespace XWeather.Tests.Providers
         {
             var provider = new CurrentWeatherProvider();
             var currentWeather = await provider.FindForCityNameAsync(string.Empty);
-            Assert.AreEqual(null, currentWeather);
+            Assert.IsNull(currentWeather);
         }
 
         [Test]
@@ -21,7 +21,15 @@ namespace XWeather.Tests.Providers
         {
             var provider = new CurrentWeatherProvider();
             var currentWeather = await provider.FindForCityCodeAsync(string.Empty);
-            Assert.AreEqual(null, currentWeather);
+            Assert.IsNull(currentWeather);
+        }
+
+        [Test]
+        public async Task CurrentWeather_NoLocationProvider_ShouldReturnNull()
+        {
+            var provider = new CurrentWeatherProvider();
+            var currentWeather = await provider.FindForCoordinatesAsync(-1, -1);
+            Assert.IsNull(currentWeather);
         }
 
         [Test]

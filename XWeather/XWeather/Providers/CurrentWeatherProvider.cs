@@ -82,6 +82,8 @@ namespace XWeather.Providers
 
         public async Task<CurrentWeatherDto> FindForCoordinatesAsync(double latitude, double longitude, string units = "", CancellationTokenSource cancellationTokenSource = default(CancellationTokenSource))
         {
+            if (latitude == -1 && longitude == -1) return null;
+
             if (cancellationTokenSource == null)
                 cancellationTokenSource = new CancellationTokenSource();
 

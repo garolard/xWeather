@@ -8,7 +8,7 @@ namespace XWeather.Converters
     {
         protected override string Convert(double value, Type targetType, object parameter, CultureInfo culture)
         {
-            return Math.Round(value).ToString("00") + "º";
+            return Math.Round(value).ToString("00") + "º C";
         }
 
         protected override double ConvertBack(string value, Type targetType, object parameter, CultureInfo culture)
