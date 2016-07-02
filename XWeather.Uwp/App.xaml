@@ -3,16 +3,17 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:XWeather.Uwp"
+    xmlns:nativeConverters="using:XWeather.Uwp.NativeConverters"
     RequestedTheme="Light">
 
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/ResourcesDictionaries/Colors.xaml"/>
-                <ResourceDictionary Source="/ResourcesDictionaries/Brushes.xaml"/>
+                <ResourceDictionary Source="ResourcesDictionaries/Brushes.xaml"/>
+                <ResourceDictionary Source="ResourcesDictionaries/Colors.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <nativeConverters:NativeTemperatureConverter x:Key="Temperature"/>
         </ResourceDictionary>
     </Application.Resources>
-    
-    
+
 </Application>

@@ -1,6 +1,8 @@
 ﻿using Windows.UI.Xaml.Controls;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
+using MvvmCross.Platform.Plugins;
+using MvvmCross.Plugins.Messenger;
 using MvvmCross.WindowsUWP.Platform;
 using MvvmCross.WindowsUWP.Views;
 using XWeather.Providers;
@@ -24,10 +26,10 @@ namespace XWeather.Uwp
             return new XWeather.App();
         }
 
-        protected override void InitializeLastChance()
+        public override void LoadPlugins(IMvxPluginManager pluginManager)
         {
-            base.InitializeLastChance();
-            MvvmCross.Plugins.Messenger.PluginLoader.Instance.EnsureLoaded();
+            pluginManager.EnsurePluginLoaded<PluginLoader>();
+            base.LoadPlugins(pluginManager);
         }
     }
 }

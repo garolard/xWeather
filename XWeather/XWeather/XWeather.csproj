@@ -35,6 +35,7 @@
   <ItemGroup>
     <Compile Include="ApiConstants.cs" />
     <Compile Include="App.cs" />
+    <Compile Include="Converters\Converters.cs" />
     <Compile Include="Dto\CityDto.cs" />
     <Compile Include="Dto\CloudsDto.cs" />
     <Compile Include="Dto\CoordDto.cs" />

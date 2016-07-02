@@ -1,5 +1,6 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
 using MvvmCross.Platform;
 using MvvmCross.Plugins.Messenger;
 using MvvmCross.WindowsUWP.Views;
