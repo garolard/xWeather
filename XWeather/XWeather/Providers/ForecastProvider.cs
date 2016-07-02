@@ -12,12 +12,13 @@ namespace XWeather.Providers
 {
     public class ForecastProvider : IForecastProvider
     {
+        private const string Endpoint = "forecast";
+
         public async Task<ForecastDto> FindForCityCodeAsync(string cityCode, string units = "", CancellationTokenSource cts = default(CancellationTokenSource))
         {
             if (cts == null)
                 cts = new CancellationTokenSource();
 
-            const string endpoint = "forecast";
             string query;
 
             var result = new List<KeyValuePair<string, string>>();
@@ -34,7 +35,7 @@ namespace XWeather.Providers
                 query = await content.ReadAsStringAsync();
             }
 
-            var forecast = await HttpProxy.Instance.GetAsync(endpoint + "?" + query, cts.Token);
+            var forecast = await HttpProxy.Instance.GetAsync(Endpoint + "?" + query, cts.Token);
 
             var possibleErrorResponse = JsonConvert.DeserializeObject<ErrorResponse>(forecast);
             if (possibleErrorResponse.cod == 404)
@@ -50,7 +51,6 @@ namespace XWeather.Providers
             if (cts == null)
                 cts = new CancellationTokenSource();
 
-            const string endpoint = "forecast";
             string query;
 
             var result = new List<KeyValuePair<string, string>>();
@@ -67,7 +67,42 @@ namespace XWeather.Providers
                 query = await content.ReadAsStringAsync();
             }
 
-            var forecast = await HttpProxy.Instance.GetAsync(endpoint + "?" + query, cts.Token);
+            var forecast = await HttpProxy.Instance.GetAsync(Endpoint + "?" + query, cts.Token);
+
+            var possibleErrorResponse = JsonConvert.DeserializeObject<ErrorResponse>(forecast);
+            if (possibleErrorResponse.cod == 404)
+                return null;
+
+            var forecastEntity = JsonConvert.DeserializeObject<Forecast>(forecast);
+
+            return new ForecastDto(forecastEntity);
+        }
+
+        public async Task<ForecastDto> FindForCoordinatesAsync(double latitude, double longitude, string units = "",
+            CancellationTokenSource cts = default(CancellationTokenSource))
+        {
+            if (latitude == -1 && longitude == -1) return null;
+
+            if (cts == null)
+                cts = new CancellationTokenSource();
+
+            string query;
+
+            var result = new List<KeyValuePair<string, string>>();
+
+            result.Add(new KeyValuePair<string, string>("lat", latitude.ToString()));
+            result.Add(new KeyValuePair<string, string>("lon", longitude.ToString()));
+            result.Add(new KeyValuePair<string, string>("lang", "es"));
+            if (!string.IsNullOrEmpty(units))
+                    result.Add(new KeyValuePair<string, string>("units", units));
+            result.Add(new KeyValuePair<string, string>("appid", ApiConstants.WeatherApiKey));
+
+            using (var content = new FormUrlEncodedContent(result.ToArray()))
+            {
+                query = await content.ReadAsStringAsync();
+            }
+
+            var forecast = await HttpProxy.Instance.GetAsync(Endpoint + "?" + query, cts.Token);
 
             var possibleErrorResponse = JsonConvert.DeserializeObject<ErrorResponse>(forecast);
             if (possibleErrorResponse.cod == 404)

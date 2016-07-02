@@ -16,4 +16,12 @@ namespace XWeather.Converters
             return double.Parse(value);
         }
     }
+
+    public class ToUpperConverter : MvxValueConverter<string>
+    {
+        protected override object Convert(string value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value == null ? string.Empty : value.ToUpper();
+        }
+    }
 }

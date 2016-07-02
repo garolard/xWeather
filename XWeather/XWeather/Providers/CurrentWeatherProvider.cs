@@ -93,6 +93,7 @@ namespace XWeather.Providers
 
             result.Add(new KeyValuePair<string, string>("lat", latitude.ToString()));
             result.Add(new KeyValuePair<string, string>("lon", longitude.ToString()));
+            result.Add(new KeyValuePair<string, string>("lang", "es"));
             if (!string.IsNullOrEmpty(units))
                 result.Add(new KeyValuePair<string, string>("units", units));
             result.Add(new KeyValuePair<string, string>("appid", ApiConstants.WeatherApiKey));

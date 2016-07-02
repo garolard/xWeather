@@ -13,6 +13,7 @@
                 <ResourceDictionary Source="ResourcesDictionaries/Colors.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <nativeConverters:NativeTemperatureConverter x:Key="Temperature"/>
+            <nativeConverters:NativeToUpperConverter x:Key="ToUpper"/>
         </ResourceDictionary>
     </Application.Resources>
 

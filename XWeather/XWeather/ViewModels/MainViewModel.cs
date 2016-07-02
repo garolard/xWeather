@@ -12,20 +12,24 @@ namespace XWeather.ViewModels
     public class MainViewModel : MvxViewModel
     {
         private readonly ICurrentWeatherProvider _weatherProvider;
+        private readonly IForecastProvider _forecastProvider;
         private readonly ILocationProvider _locationProvider;
         private readonly IMvxMessenger _messenger;
 
         private string _cityName;
         private CurrentWeatherDto _currentWeather;
+        private ForecastDto _forecast;
 
 
         public MainViewModel()
         {
             _weatherProvider = Mvx.Resolve<ICurrentWeatherProvider>();
+            _forecastProvider = Mvx.Resolve<IForecastProvider>();
             _locationProvider = Mvx.Resolve<ILocationProvider>();
             _messenger = Mvx.Resolve<IMvxMessenger>();
 
             CurrentWeather = new CurrentWeatherDto();
+            Forecast = new ForecastDto();
 
             GetCurrentWeatherCommand = new MvxAsyncCommand(GetCurrentWeatherAsync);
             SendChangeBackgroundMessageCommand = new MvxCommand(SendChangeBackgroundMessage);
@@ -44,6 +48,12 @@ namespace XWeather.ViewModels
             set { _currentWeather = value; RaisePropertyChanged(); }
         }
 
+        public ForecastDto Forecast
+        {
+            get { return _forecast; }
+            set { _forecast = value; RaisePropertyChanged(); }
+        }
+
         public IMvxCommand GetCurrentWeatherCommand { get; }
 
         public IMvxCommand SendChangeBackgroundMessageCommand { get; }
@@ -52,6 +62,7 @@ namespace XWeather.ViewModels
         public void Init()
         {
             GetCurrentWeatherCommand.Execute();
+
         }
 
 
@@ -62,6 +73,10 @@ namespace XWeather.ViewModels
                 await _weatherProvider.FindForCoordinatesAsync(currentLocation.Latitude, currentLocation.Longitude, "metric", new CancellationTokenSource());
             if (CurrentWeather != null)
                 SendChangeBackgroundMessageCommand.Execute();
+            Forecast =
+                await
+                    _forecastProvider.FindForCoordinatesAsync(currentLocation.Latitude, currentLocation.Longitude,
+                        "metric", new CancellationTokenSource());
         }
 
         private void SendChangeBackgroundMessage()
