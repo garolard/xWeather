@@ -5,4 +5,14 @@
     xmlns:local="using:XWeather.Uwp"
     RequestedTheme="Light">
 
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/ResourcesDictionaries/Colors.xaml"/>
+                <ResourceDictionary Source="/ResourcesDictionaries/Brushes.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+    
+    
 </Application>

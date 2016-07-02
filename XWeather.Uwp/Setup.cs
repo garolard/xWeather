@@ -19,5 +19,11 @@ namespace XWeather.Uwp
         {
             return new XWeather.App();
         }
+
+        protected override void InitializeLastChance()
+        {
+            base.InitializeLastChance();
+            MvvmCross.Plugins.Messenger.PluginLoader.Instance.EnsureLoaded();
+        }
     }
 }

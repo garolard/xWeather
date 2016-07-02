@@ -14,12 +14,8 @@
         <viewModels:MainViewModel x:Key="DesignViewModel" />
     </views:MvxWindowsPage.Resources>
     
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel>
-            <TextBox Text="{Binding CityName, Mode=TwoWay}"/>
-            <Button Content="Get weather" Command="{Binding GetCurrentWeatherCommand}"/>
-            <TextBlock Margin="0 12 0 0" Text="{Binding CurrentWeather.Main.Temp}"/>
-            <TextBlock Margin="0 12 0 0" Text="{Binding CurrentWeather.Clouds.All}"/>
-        </StackPanel>
-    </Grid>
+    <RelativePanel x:Name="RootContainer" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <TextBlock x:Name="CurrentTemperature" TextWrapping="Wrap" Text="{Binding CurrentWeather.Main.Temperature}" Style="{StaticResource HeaderTextBlockStyle}" FontSize="72" Margin="80,160,0,0"/>
+        <TextBlock x:Name="DetectedCity" TextWrapping="Wrap" Text="{Binding CurrentWeather.Name}" Margin="80,0,0,0" RelativePanel.Below="CurrentTemperature" RelativePanel.AlignLeftWith="CurrentTemperature" Style="{StaticResource TitleTextBlockStyle}" />
+    </RelativePanel>
 </views:MvxWindowsPage>
