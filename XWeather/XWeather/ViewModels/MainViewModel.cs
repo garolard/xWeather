@@ -25,7 +25,7 @@ namespace XWeather.ViewModels
         {
             _weatherProvider = Mvx.Resolve<ICurrentWeatherProvider>();
             _forecastProvider = Mvx.Resolve<IForecastProvider>();
-            _locationProvider = Mvx.Resolve<ILocationProvider>();
+            //_locationProvider = Mvx.Resolve<ILocationProvider>();
             _messenger = Mvx.Resolve<IMvxMessenger>();
 
             CurrentWeather = new CurrentWeatherDto();
@@ -68,15 +68,17 @@ namespace XWeather.ViewModels
 
         private async Task GetCurrentWeatherAsync()
         {
-            var currentLocation = await _locationProvider.GetCurrentLocationAsync();
+            //var currentLocation = await _locationProvider.GetCurrentLocationAsync();
+            //CurrentWeather =
+            //    await _weatherProvider.FindForCoordinatesAsync(currentLocation.Latitude, currentLocation.Longitude, "metric", new CancellationTokenSource());
             CurrentWeather =
-                await _weatherProvider.FindForCoordinatesAsync(currentLocation.Latitude, currentLocation.Longitude, "metric", new CancellationTokenSource());
+                await _weatherProvider.FindForCityNameAsync("Madrid,ES", "metric", new CancellationTokenSource());
             if (CurrentWeather != null)
                 SendChangeBackgroundMessageCommand.Execute();
-            Forecast =
-                await
-                    _forecastProvider.FindForCoordinatesAsync(currentLocation.Latitude, currentLocation.Longitude,
-                        "metric", new CancellationTokenSource());
+            //Forecast =
+            //    await
+            //        _forecastProvider.FindForCoordinatesAsync(currentLocation.Latitude, currentLocation.Longitude,
+            //            "metric", new CancellationTokenSource());
         }
 
         private void SendChangeBackgroundMessage()
