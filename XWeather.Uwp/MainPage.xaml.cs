@@ -1,5 +1,8 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
+using Windows.UI;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using MvvmCross.Platform;
 using MvvmCross.Plugins.Messenger;
@@ -16,6 +19,8 @@ namespace XWeather.Uwp
     public sealed partial class MainPage : MvxWindowsPage
     {
         private MvxSubscriptionToken _changeBrackgroundSubscriptionToken;
+        private Color _backgroundColor;
+
 
         public MainPage()
         {
@@ -31,16 +36,19 @@ namespace XWeather.Uwp
 
             if (clouds < 25)
             {
-                RootContainer.Background = Application.Current.Resources["SunnyBrush"] as SolidColorBrush;
+                _backgroundColor = (Color)Application.Current.Resources["SunnyBlue"];
             }
             else if (clouds >= 25 && clouds < 75)
             {
-                RootContainer.Background = Application.Current.Resources["PatlyCloudyBrush"] as SolidColorBrush;
+                _backgroundColor = (Color)Application.Current.Resources["PartlyCloudyBlue"];
             }
             else
             {
-                RootContainer.Background = Application.Current.Resources["CloudyBrush"] as SolidColorBrush;
+                _backgroundColor = (Color)Application.Current.Resources["CloudyGray"];
             }
+
+            ColorAnimation.To = _backgroundColor;
+            ChangeBackgroundStoryboard.Begin();
         }
     }
 }
