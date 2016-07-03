@@ -22,9 +22,9 @@
     </views:MvxWindowsPage.Resources>
     
     <RelativePanel x:Name="RootContainer" Background="{StaticResource ContainerBrush}">
-        <TextBlock x:Name="DetectedCity" TextWrapping="Wrap" Text="{Binding CurrentWeather.Name, Converter={StaticResource ToUpper}}" Style="{StaticResource SubtitleTextBlockStyle}" FontFamily="Segoe UI Black" FontWeight="Bold" Margin="20,20,0,0" Foreground="White"/>
-        <TextBlock x:Name="CurrentTemperature" TextWrapping="Wrap" Text="{Binding CurrentWeather.Main.Temp, Converter={StaticResource Temperature}}" Style="{StaticResource HeaderTextBlockStyle}" FontSize="136" Margin="20,60,0,0" Foreground="White"/>
-        <TextBlock x:Name="WeatherDescription" TextWrapping="Wrap" Text="" Margin="20,0,0,0" RelativePanel.Below="CurrentTemperature" RelativePanel.AlignLeftWith="CurrentTemperature" Style="{StaticResource TitleTextBlockStyle}" FontSize="22" Foreground="White" />
+        <TextBlock x:Name="DetectedCity" TextWrapping="Wrap" Text="{Binding CurrentWeather.Name, Converter={StaticResource ToUpper}}" Style="{StaticResource SubtitleTextBlockStyle}" FontFamily="Segoe UI Black" FontWeight="Bold" Margin="20,40,0,0" Foreground="White"/>
+        <TextBlock x:Name="CurrentTemperature" TextWrapping="Wrap" Text="{Binding CurrentWeather.Main.Temp, Converter={StaticResource Temperature}}" Style="{StaticResource HeaderTextBlockStyle}" FontSize="136" Margin="20,40,0,0" Foreground="White"/>
+        <TextBlock x:Name="WeatherDescription" TextWrapping="Wrap" Text="{Binding CurrentWeather.Weather[0].Description}" Margin="20,-20,0,0" RelativePanel.Below="CurrentTemperature" RelativePanel.AlignLeftWith="CurrentTemperature" Style="{StaticResource TitleTextBlockStyle}" FontSize="22" Foreground="White" />
         <ListView x:Name="listView" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="0"/>
     </RelativePanel>
 </views:MvxWindowsPage>
