@@ -24,6 +24,7 @@ namespace XWeather.Uwp.Providers
             switch (accessStatus)
             {
                 case GeolocationAccessStatus.Allowed:
+                    _locator = new Geolocator();
                     var position = await _locator.GetGeopositionAsync();
                     return new GeoLocation()
                     {
