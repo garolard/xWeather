@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Reflection.Emit;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
@@ -10,79 +9,110 @@ using XWeather.Providers;
 
 namespace XWeather.Droid.Providers
 {
-    public class AndroidLocationProvider : ILocationProvider, ILocationListener
+    // Heavily based on https://github.com/jamesmontemagno/GeolocatorPlugin/blob/master/src/Geolocator.Plugin.Android/GeolocatorImplementation.cs
+    public class AndroidLocationProvider : ILocationProvider
     {
-        private readonly Context _context;
-        private string _locationProvider;
-        private LocationManager _locationManager;
-        private Location _location;
+        private readonly LocationManager _manager;
+        private readonly object _locationSync = new object();
+        private readonly string[] _providers;
+
+        private GeolocationSingleListener _listener;
+        private Location _lastLocation;
 
 
-        public AndroidLocationProvider(Context context)
+        public AndroidLocationProvider()
         {
-            _context = context;
+            _manager = (LocationManager) Application.Context.GetSystemService(Context.LocationService);
+            _providers =
+                _manager.GetProviders(enabledOnly: true).Where(p => p != LocationManager.PassiveProvider).ToArray();
         }
 
 
-        public Task<GeoLocation> GetCurrentLocationAsync()
-        {
-            InitLocationManager();
-            var location = _locationManager.GetLastKnownLocation(_locationProvider);
+        public bool IsListening => _listener != null;
 
-            if (location != null)
-                return Task.FromResult(new GeoLocation()
+        public event EventHandler<PositionEventArgs> PositionChanged;
+
+
+        public async Task<GeoLocation> GetPositionAsync()
+        {
+            var tcs = new TaskCompletionSource<GeoLocation>();
+
+            // If I don't have the listener up, build it up, request a single location update and return the listener's inner task
+            if (!IsListening)
+            {
+                _listener = new GeolocationSingleListener(500.0f, _providers.Where(_manager.IsProviderEnabled), () =>
                 {
-                    Latitude = location.Latitude,
-                    Longitude = location.Longitude
+                    for (int i = 0; i < _providers.Length; i++)
+                    {
+                        _manager.RemoveUpdates(_listener);
+                    }
                 });
-            else
-                return null;
-        }
 
-        private void InitLocationManager()
-        {
-            _locationManager = (LocationManager) _context.GetSystemService(Context.LocationService);
-            var criteriaForLocationService = new Criteria()
-            {
-                Accuracy = Accuracy.Medium
-            };
+                try
+                {
+                    var enabled = 0;
+                    foreach (var provider in _providers)
+                    {
+                        if (_manager.IsProviderEnabled(provider))
+                            enabled++;
 
-            var acceptableLocationProviders = _locationManager.GetProviders(criteriaForLocationService,
-                enabledOnly: true);
+                        _manager.RequestSingleUpdate(provider, _listener, Looper.MainLooper);
+                    }
 
-            if (acceptableLocationProviders.Any())
-            {
-                _locationProvider = acceptableLocationProviders.First();
+                    if (enabled == 0)
+                    {
+                        foreach (var provider in _providers)
+                        {
+                            _manager.RemoveUpdates(_listener);
+                        }
+
+                        tcs.TrySetException(new InvalidOperationException());
+                        return await tcs.Task.ConfigureAwait(false);
+                    }
+                }
+                catch (Java.Lang.SecurityException securityException)
+                {
+                    tcs.TrySetException(new InvalidOperationException());
+                    return await tcs.Task.ConfigureAwait(false);
+                }
+
+                return await _listener.Task.ConfigureAwait(false);
             }
-            else
+
+            // If I had the listener up and running, simply use that listener or a last known location
+            lock (_locationSync)
             {
-                _locationProvider = string.Empty;
+                if (_lastLocation == null)
+                {
+                    EventHandler<PositionEventArgs> gotPosition = null;
+                    gotPosition = (s, e) =>
+                    {
+                        tcs.TrySetResult(e.Location);
+                        PositionChanged -= gotPosition;
+                    };
+
+                    PositionChanged += gotPosition;
+                }
+                else
+                {
+                    var geolocation = new GeoLocation()
+                    {
+                        Latitude = _lastLocation.Latitude,
+                        Longitude = _lastLocation.Longitude
+                    };
+                    tcs.SetResult(geolocation);
+                }
             }
+
+            return await tcs.Task.ConfigureAwait(false);
         }
 
-        public void Dispose()
+        public Task<bool> StartListeningAsync(int minTime, double minDistance)
         {
             throw new NotImplementedException();
         }
 
-        public IntPtr Handle { get; }
-
-        public void OnLocationChanged(Location location)
-        {
-            _location = location;
-        }
-
-        public void OnProviderDisabled(string provider)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnProviderEnabled(string provider)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnStatusChanged(string provider, Availability status, Bundle extras)
+        public Task<bool> StopListeningAsync()
         {
             throw new NotImplementedException();
         }

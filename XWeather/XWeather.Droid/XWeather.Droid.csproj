@@ -89,6 +89,7 @@
     <Compile Include="Bootstrap\MessengerPluginBootstrap.cs" />
     <Compile Include="MainView.cs" />
     <Compile Include="Providers\AndroidLocationProvider.cs" />
+    <Compile Include="Providers\GeolocationSingleListener.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Setup.cs" />
