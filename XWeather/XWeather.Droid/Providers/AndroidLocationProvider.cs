@@ -14,10 +14,10 @@ namespace XWeather.Droid.Providers
     {
         private readonly LocationManager _manager;
         private readonly object _locationSync = new object();
-        private readonly string[] _providers;
 
-        private GeolocationSingleListener _listener;
+        private GeolocationContinuousListener _listener;
         private Location _lastLocation;
+        private string[] _providers;
 
 
         public AndroidLocationProvider()
@@ -40,11 +40,12 @@ namespace XWeather.Droid.Providers
             // If I don't have the listener up, build it up, request a single location update and return the listener's inner task
             if (!IsListening)
             {
-                _listener = new GeolocationSingleListener(500.0f, _providers.Where(_manager.IsProviderEnabled), () =>
+                GeolocationSingleListener listener = null;
+                listener = new GeolocationSingleListener(500.0f, _providers.Where(_manager.IsProviderEnabled), () =>
                 {
                     for (int i = 0; i < _providers.Length; i++)
                     {
-                        _manager.RemoveUpdates(_listener);
+                        _manager.RemoveUpdates(listener);
                     }
                 });
 
@@ -56,14 +57,14 @@ namespace XWeather.Droid.Providers
                         if (_manager.IsProviderEnabled(provider))
                             enabled++;
 
-                        _manager.RequestSingleUpdate(provider, _listener, Looper.MainLooper);
+                        _manager.RequestSingleUpdate(provider, listener, Looper.MainLooper);
                     }
 
                     if (enabled == 0)
                     {
                         foreach (var provider in _providers)
                         {
-                            _manager.RemoveUpdates(_listener);
+                            _manager.RemoveUpdates(listener);
                         }
 
                         tcs.TrySetException(new InvalidOperationException());
@@ -76,7 +77,7 @@ namespace XWeather.Droid.Providers
                     return await tcs.Task.ConfigureAwait(false);
                 }
 
-                return await _listener.Task.ConfigureAwait(false);
+                return await listener.Task.ConfigureAwait(false);
             }
 
             // If I had the listener up and running, simply use that listener or a last known location
@@ -109,12 +110,49 @@ namespace XWeather.Droid.Providers
 
         public Task<bool> StartListeningAsync(int minTime, double minDistance)
         {
-            throw new NotImplementedException();
-        }
+            if (minTime < 0)
+                throw new ArgumentOutOfRangeException(nameof(minTime));
+            if (minDistance < 0)
+                throw new ArgumentOutOfRangeException(nameof(minDistance));
 
+            if (_providers.Length == 0)
+                _providers =
+                    _manager.GetProviders(enabledOnly: true).Where(p => p != LocationManager.PassiveProvider).ToArray();
+
+            _listener = new GeolocationContinuousListener(_manager, _providers);
+            _listener.PositionChanged += OnPositionChanged;
+
+            foreach (var provider in _providers)
+            {
+                _manager.RequestLocationUpdates(provider, minTime, (float)minDistance, _listener, Looper.MainLooper);
+            }
+
+            return Task.FromResult(true);
+        }
+        
         public Task<bool> StopListeningAsync()
         {
-            throw new NotImplementedException();
+            if (_listener == null)
+                return Task.FromResult(true);
+
+            _listener.PositionChanged -= OnPositionChanged;
+
+            foreach (var provider in _providers)
+            {
+                _manager.RemoveUpdates(_listener);
+            }
+
+            _listener = null;
+            return Task.FromResult(true);
+        }
+
+
+        private void OnPositionChanged(object sender, PositionEventArgs positionEventArgs)
+        {
+            if (!IsListening)
+                return;
+
+            PositionChanged?.Invoke(this, positionEventArgs);
         }
     }
 }
