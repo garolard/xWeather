@@ -7,9 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XWeather.Droid", "XWeather\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XWeather", "XWeather\XWeather\XWeather.csproj", "{1CD3BA52-71BF-4EFC-8E1C-15089E5E851F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XWeather.Tests", "XWeather.Tests\XWeather.Tests.csproj", "{8C5A5EC3-659F-46E7-8F41-5EC770A22BE2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XWeather.Tests", "XWeather\XWeather.Tests\XWeather.Tests.csproj", "{8C5A5EC3-659F-46E7-8F41-5EC770A22BE2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XWeather.Uwp", "XWeather.Uwp\XWeather.Uwp.csproj", "{E6B54604-6ED2-43BF-9707-92965BDBF55D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XWeather.Uwp", "XWeather\XWeather.Uwp\XWeather.Uwp.csproj", "{E6B54604-6ED2-43BF-9707-92965BDBF55D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -131,8 +131,8 @@ Global
 		{8C5A5EC3-659F-46E7-8F41-5EC770A22BE2}.AppStore|iPhone.Build.0 = Release|Any CPU
 		{8C5A5EC3-659F-46E7-8F41-5EC770A22BE2}.AppStore|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{8C5A5EC3-659F-46E7-8F41-5EC770A22BE2}.AppStore|iPhoneSimulator.Build.0 = Release|Any CPU
-		{8C5A5EC3-659F-46E7-8F41-5EC770A22BE2}.AppStore|x64.ActiveCfg = Debug|Any CPU
-		{8C5A5EC3-659F-46E7-8F41-5EC770A22BE2}.AppStore|x64.Build.0 = Debug|Any CPU
+		{8C5A5EC3-659F-46E7-8F41-5EC770A22BE2}.AppStore|x64.ActiveCfg = Release|Any CPU
+		{8C5A5EC3-659F-46E7-8F41-5EC770A22BE2}.AppStore|x64.Build.0 = Release|Any CPU
 		{8C5A5EC3-659F-46E7-8F41-5EC770A22BE2}.AppStore|x86.ActiveCfg = Release|Any CPU
 		{8C5A5EC3-659F-46E7-8F41-5EC770A22BE2}.AppStore|x86.Build.0 = Release|Any CPU
 		{8C5A5EC3-659F-46E7-8F41-5EC770A22BE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

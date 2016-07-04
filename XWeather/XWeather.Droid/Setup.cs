@@ -1,6 +1,9 @@
 ﻿using Android.Content;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Droid.Platform;
+using MvvmCross.Platform;
+using XWeather.Droid.Providers;
+using XWeather.Providers;
 
 namespace XWeather.Droid
 {
@@ -12,6 +15,7 @@ namespace XWeather.Droid
 
         protected override IMvxApplication CreateApp()
         {
+            Mvx.RegisterSingleton<ILocationProvider>(() => new AndroidLocationProvider(ApplicationContext));
             return new App();
         }
     }

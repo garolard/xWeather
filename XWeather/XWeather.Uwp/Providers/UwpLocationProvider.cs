@@ -26,7 +26,7 @@ namespace XWeather.Uwp.Providers
                         Longitude = position.Coordinate.Longitude
                     };
                 default:
-                    return new GeoLocation() {Latitude = -1, Longitude = -1};
+                    return null;
             }
         }
     }
