@@ -140,7 +140,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\XWeather\XWeather\XWeather.csproj">
+    <ProjectReference Include="..\XWeather\XWeather.csproj">
       <Project>{1cd3ba52-71bf-4efc-8e1c-15089e5e851f}</Project>
       <Name>XWeather</Name>
     </ProjectReference>

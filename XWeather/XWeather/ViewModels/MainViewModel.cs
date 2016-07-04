@@ -68,7 +68,7 @@ namespace XWeather.ViewModels
 
         private async Task GetCurrentWeatherAsync()
         {
-            var currentLocation = await _locationProvider.GetCurrentLocationAsync();
+            var currentLocation = await _locationProvider.GetPositionAsync();
             CurrentWeather =
                 await _weatherProvider.FindForCoordinatesAsync(currentLocation.Latitude, currentLocation.Longitude, "metric", new CancellationTokenSource());
             if (CurrentWeather != null)
