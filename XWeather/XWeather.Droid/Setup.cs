@@ -15,7 +15,7 @@ namespace XWeather.Droid
 
         protected override IMvxApplication CreateApp()
         {
-            Mvx.RegisterSingleton<ILocationProvider>(() => new AndroidLocationProvider(ApplicationContext));
+            Mvx.RegisterSingleton<ILocationProvider>(() => new AndroidLocationProvider());
             return new App();
         }
     }
