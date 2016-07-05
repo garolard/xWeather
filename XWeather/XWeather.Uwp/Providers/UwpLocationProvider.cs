@@ -9,7 +9,13 @@ namespace XWeather.Uwp.Providers
     public class UwpLocationProvider : ILocationProvider
     {
         private bool _isListening;
-        private Geolocator _locator;
+        private readonly Geolocator _locator;
+
+
+        public UwpLocationProvider()
+        {
+            _locator = new Geolocator();
+        }
 
 
         public bool IsListening { get; }
@@ -24,7 +30,6 @@ namespace XWeather.Uwp.Providers
             switch (accessStatus)
             {
                 case GeolocationAccessStatus.Allowed:
-                    _locator = new Geolocator();
                     var position = await _locator.GetGeopositionAsync();
                     return new GeoLocation()
                     {
