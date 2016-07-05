@@ -90,9 +90,7 @@ namespace XWeather.Providers
             string query;
 
             var result = new List<KeyValuePair<string, string>>();
-
-            result.Add(new KeyValuePair<string, string>("lat", latitude.ToString()));
-            result.Add(new KeyValuePair<string, string>("lon", longitude.ToString()));
+            
             result.Add(new KeyValuePair<string, string>("lang", "es"));
             if (!string.IsNullOrEmpty(units))
                 result.Add(new KeyValuePair<string, string>("units", units));
@@ -100,7 +98,8 @@ namespace XWeather.Providers
 
             using (var content = new FormUrlEncodedContent(result.ToArray()))
             {
-                query = await content.ReadAsStringAsync();
+                query = string.Format("lat={0}&lon={1}&", latitude.ToString().Replace(',', '.'), longitude.ToString().Replace(',', '.'));
+                query += await content.ReadAsStringAsync();
             }
 
             var weather = await HttpProxy.Instance.GetAsync(Endpoint + "?" + query, cancellationTokenSource.Token);

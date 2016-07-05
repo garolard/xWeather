@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:local="http://schemas.android.com/apk/res-auto"
               android:id="@+id/MainContainer"
     android:orientation="vertical"
@@ -7,22 +7,46 @@
     android:layout_height="fill_parent"
     android:padding="16dp">
     <TextView
+        android:id="@+id/DetectedCity"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:textColor="@android:color/white"
         android:textAppearance="@android:style/TextAppearance.Material.Button"
         local:MvxBind="Text CurrentWeather.Name, Converter=ToUpper" />
     <TextView
+        android:id="@+id/CurrentTemperature"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/DetectedCity"
         android:textColor="@android:color/white"
         android:textSize="89sp"
         android:textAppearance="@android:style/TextAppearance.Material.Display3"
         local:MvxBind="Text CurrentWeather.Main.Temp, Converter=Temperature" />
     <TextView
+        android:id="@+id/WeatherDescription"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/CurrentTemperature"
         android:textColor="@android:color/white"
         android:textAppearance="@android:style/TextAppearance.Material.Body2"
         local:MvxBind="Text CurrentWeather.Weather[0].Description" />
-</LinearLayout>
+  <LinearLayout
+      android:id="@+id/LoadingLayout"
+      android:layout_margin="16dp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentRight="true"
+      android:layout_alignParentBottom="true"
+      local:MvxBind="Visibility IsBusy, Converter=BoolToVisibility">
+    <ProgressBar
+      android:layout_width="36dp"
+      android:layout_height="36dp"
+      local:MvxBind="Indeterminate IsBusy"/>
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="12dp"
+      android:text="Locating you..."/>
+  </LinearLayout>
+</RelativeLayout>

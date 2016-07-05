@@ -57,7 +57,8 @@ namespace XWeather.Droid.Providers
                         if (_manager.IsProviderEnabled(provider))
                             enabled++;
 
-                        _manager.RequestSingleUpdate(provider, listener, Looper.MainLooper);
+                        var looper = Looper.MyLooper() ?? Looper.MainLooper;
+                        _manager.RequestSingleUpdate(provider, listener, looper);
                     }
 
                     if (enabled == 0)
@@ -122,9 +123,10 @@ namespace XWeather.Droid.Providers
             _listener = new GeolocationContinuousListener(_manager, _providers);
             _listener.PositionChanged += OnPositionChanged;
 
+            var looper = Looper.MyLooper() ?? Looper.MainLooper;
             foreach (var provider in _providers)
             {
-                _manager.RequestLocationUpdates(provider, minTime, (float)minDistance, _listener, Looper.MainLooper);
+                _manager.RequestLocationUpdates(provider, minTime, (float)minDistance, _listener, looper);
             }
 
             return Task.FromResult(true);

@@ -26,7 +26,7 @@ namespace XWeather.Droid
 	    private void ChangeBackgroundColor(NeedChangeBackgroundColorMessage obj)
 	    {
 	        var clouds = obj.Clouds;
-	        var container = FindViewById<LinearLayout>(Resource.Id.MainContainer);
+	        var container = FindViewById<RelativeLayout>(Resource.Id.MainContainer);
 	        var originColor = new ColorDrawable(Color.White);
 	        ColorDrawable destColor;
 

@@ -124,6 +124,15 @@ namespace XWeather.Droid
 		public partial class Id
 		{
 			
+			// aapt resource value: 0x7f040004
+			public const int CurrentTemperature = 2130968580;
+			
+			// aapt resource value: 0x7f040003
+			public const int DetectedCity = 2130968579;
+			
+			// aapt resource value: 0x7f040006
+			public const int LoadingLayout = 2130968582;
+			
 			// aapt resource value: 0x7f040002
 			public const int MainContainer = 2130968578;
 			
@@ -132,6 +141,9 @@ namespace XWeather.Droid
 			
 			// aapt resource value: 0x7f040001
 			public const int MvxBindingTagUnique = 2130968577;
+			
+			// aapt resource value: 0x7f040005
+			public const int WeatherDescription = 2130968581;
 			
 			static Id()
 			{

@@ -16,6 +16,7 @@ namespace XWeather.ViewModels
         private readonly ILocationProvider _locationProvider;
         private readonly IMvxMessenger _messenger;
 
+        private bool _isBusy;
         private string _cityName;
         private CurrentWeatherDto _currentWeather;
         private ForecastDto _forecast;
@@ -35,6 +36,12 @@ namespace XWeather.ViewModels
             SendChangeBackgroundMessageCommand = new MvxCommand(SendChangeBackgroundMessage);
         }
 
+
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set { _isBusy = value; RaisePropertyChanged(); }
+        }
 
         public string CityName
         {
@@ -68,9 +75,14 @@ namespace XWeather.ViewModels
 
         private async Task GetCurrentWeatherAsync()
         {
+            IsBusy = true;
+
             var currentLocation = await _locationProvider.GetPositionAsync();
             CurrentWeather =
                 await _weatherProvider.FindForCoordinatesAsync(currentLocation.Latitude, currentLocation.Longitude, "metric", new CancellationTokenSource());
+
+            IsBusy = false;
+
             if (CurrentWeather != null)
                 SendChangeBackgroundMessageCommand.Execute();
             Forecast =
