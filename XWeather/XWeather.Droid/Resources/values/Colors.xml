@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <item name="SunnyBlue" type="color">#80dfff</item>
+  <item name="PartlyCloudyBlue" type="color">#d6e0f5</item>
+  <item name="CloudyGray" type="color">#b3b3cc</item>
+</resources>
