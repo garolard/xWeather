@@ -12,6 +12,15 @@ namespace XWeather.Uwp.NativeConverters
     public class NativeToUpperConverter : MvxNativeValueConverter<ToUpperConverter>
     { }
 
+    public class NativeDateTimeToTimeConverter : MvxNativeValueConverter<DateTimeToTimeConverter>
+    { }
+
+    public class NativeDateTimeStringToTimeStringConvertert : MvxNativeValueConverter<DateTimeStringToTimeStringConverter>
+    { }
+
+    public class NativeValueMultipliedByFactorConverter : MvxNativeValueConverter<ValueMultipliedByFactorConverter>
+    { }
+
     public class BoolToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)

@@ -2,6 +2,7 @@
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:dto="using:XWeather.Dto"
                       xmlns:local="using:XWeather.Uwp"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:viewModels="using:XWeather.ViewModels"
@@ -47,22 +48,55 @@
                    Style="{StaticResource TitleTextBlockStyle}"
                    Text="{Binding CurrentWeather.Weather[0].Description}"
                    TextWrapping="Wrap" />
-        <ListView x:Name="listView"
-                  Width="0"
-                  Height="0"
-                  HorizontalAlignment="Left"
-                  VerticalAlignment="Top" />
+
+        <ListView x:Name="ForecastList"
+                  Height="120"
+                  Margin="60,120"
+                  ItemsSource="{Binding Forecast.List}"
+                  RelativePanel.AlignLeftWithPanel="True"
+                  RelativePanel.AlignRightWithPanel="True"
+                  RelativePanel.Below="WeatherDescription">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel Orientation="Horizontal" Margin="0" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="dto:CurrentWeatherDto">
+                    <Grid Width="48" VerticalAlignment="Bottom">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Grid x:Name="ColumnGrid"
+                              Grid.Row="0"
+                              Width="36"
+                              Height="{x:Bind Main.Temp, Converter={StaticResource MultipliedByFactor}, ConverterParameter=2}"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Bottom"
+                              Background="#eeffffff" />
+                        <TextBlock x:Name="HourBlock"
+                                   Grid.Row="1"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Bottom"
+                                   Text="{x:Bind WeatherTime, Converter={StaticResource DateTimeStringToTimeString}}" />
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
         <StackPanel x:Name="LoadingPanel"
                     Margin="20"
                     Orientation="Horizontal"
                     RelativePanel.AlignBottomWithPanel="True"
                     RelativePanel.AlignRightWithPanel="True"
-                    Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibility}}">
+                    Visibility="{Binding IsBusy,
+                                         Converter={StaticResource BoolToVisibility}}">
             <ProgressRing Width="32"
                           Height="32"
-                          IsActive="{Binding IsBusy}"
-                          Foreground="{ThemeResource SystemControlForegroundAccentBrush}" />
+                          Foreground="{ThemeResource SystemControlForegroundAccentBrush}"
+                          IsActive="{Binding IsBusy}" />
             <TextBlock Margin="12,0,0,0"
                        VerticalAlignment="Center"
                        Foreground="{ThemeResource SystemControlForegroundAccentBrush}"

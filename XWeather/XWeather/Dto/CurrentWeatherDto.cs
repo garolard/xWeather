@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MvvmCross.Core.ViewModels;
 using XWeather.Entities;
 
@@ -12,7 +13,8 @@ namespace XWeather.Dto
         private MainDto _main;
         private WindDto _wind;
         private CloudsDto _clouds;
-        private int _dt;
+        private long _dt;
+        private string _weatherTime;
         private SysDto _sys;
         private int _id;
         private string _name;
@@ -39,6 +41,7 @@ namespace XWeather.Dto
                 ? new CloudsDto()
                 : new CloudsDto(currentWeather.clouds);
             Dt = currentWeather.dt;
+            WeatherTime = currentWeather.dt_txt;
             Sys = currentWeather.sys == null
                 ? new SysDto() 
                 : new SysDto(currentWeather.sys);
@@ -88,10 +91,16 @@ namespace XWeather.Dto
             set { _clouds = value; RaisePropertyChanged(); }
         }
 
-        public int Dt
+        public long Dt
         {
             get { return _dt; }
             set { _dt = value; RaisePropertyChanged(); }
+        }
+
+        public string WeatherTime
+        {
+            get { return _weatherTime; }
+            set { _weatherTime = value; RaisePropertyChanged(); }
         }
 
         public SysDto Sys
