@@ -1,4 +1,7 @@
-﻿using System.Threading;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
@@ -61,6 +64,21 @@ namespace XWeather.ViewModels
             set { _forecast = value; RaisePropertyChanged(); }
         }
 
+        public IEnumerable<double> CurrentDayTemperatures
+        {
+            get
+            {
+                if (Forecast.List == null || !Forecast.List.Any())
+                    return new List<double>();
+                else
+                    return
+                        Forecast.List
+                            .Take(10)
+                            .Select(cw => cw.Main.Temp)
+                            .ToList();
+            }
+        }
+
         public IMvxCommand GetCurrentWeatherCommand { get; }
 
         public IMvxCommand SendChangeBackgroundMessageCommand { get; }
@@ -89,6 +107,7 @@ namespace XWeather.ViewModels
                 await
                     _forecastProvider.FindForCoordinatesAsync(currentLocation.Latitude, currentLocation.Longitude,
                         "metric", new CancellationTokenSource());
+            RaisePropertyChanged(nameof(CurrentDayTemperatures));
         }
 
         private void SendChangeBackgroundMessage()

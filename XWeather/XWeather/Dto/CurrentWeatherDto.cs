@@ -97,6 +97,8 @@ namespace XWeather.Dto
             set { _dt = value; RaisePropertyChanged(); }
         }
 
+        public DateTime WeatherDateTime => DateTime.ParseExact(WeatherTime, "yyyy-MM-dd HH:mm:ss", null);
+
         public string WeatherTime
         {
             get { return _weatherTime; }

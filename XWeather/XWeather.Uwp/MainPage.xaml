@@ -1,4 +1,5 @@
 ﻿<views:MvxWindowsPage x:Class="XWeather.Uwp.MainPage"
+                      x:Name="MainPageName"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,6 +8,7 @@
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:viewModels="using:XWeather.ViewModels"
                       xmlns:views="using:MvvmCross.WindowsUWP.Views"
+                      xmlns:controls="using:SimpleLineChart.Controls"
                       d:DataContext="{StaticResource DesignViewModel}"
                       mc:Ignorable="d">
 
@@ -49,42 +51,23 @@
                    Text="{Binding CurrentWeather.Weather[0].Description}"
                    TextWrapping="Wrap" />
 
-        <ListView x:Name="ForecastList"
-                  Height="120"
-                  Margin="60,120"
-                  ItemsSource="{Binding Forecast.List}"
-                  RelativePanel.AlignLeftWithPanel="True"
-                  RelativePanel.AlignRightWithPanel="True"
-                  RelativePanel.Below="WeatherDescription">
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <VirtualizingStackPanel Orientation="Horizontal" Margin="0" />
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="dto:CurrentWeatherDto">
-                    <Grid Width="48" VerticalAlignment="Bottom">
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-
-                        <Grid x:Name="ColumnGrid"
-                              Grid.Row="0"
-                              Width="36"
-                              Height="{x:Bind Main.Temp, Converter={StaticResource MultipliedByFactor}, ConverterParameter=2}"
-                              HorizontalAlignment="Center"
-                              VerticalAlignment="Bottom"
-                              Background="#eeffffff" />
-                        <TextBlock x:Name="HourBlock"
-                                   Grid.Row="1"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Bottom"
-                                   Text="{x:Bind WeatherTime, Converter={StaticResource DateTimeStringToTimeString}}" />
-                    </Grid>
+        <controls:BezierCurveChartControl RelativePanel.Below="WeatherDescription"
+                                                RelativePanel.AlignHorizontalCenterWithPanel="True"
+                                                Margin="40,80"
+                                                PathWidth="900"
+                                                PathHeight="200"
+                                                Stroke="White"
+                                                StrokeThickness="2"
+                                                DrawValuePoints="True"
+                                                Data="{Binding CurrentDayTemperatures}">
+            <controls:BezierCurveChartControl.ValuePointDecorator>
+                <DataTemplate>
+                    <Ellipse Fill="White"
+                             Width="8"
+                             Height="8"/>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </controls:BezierCurveChartControl.ValuePointDecorator>
+        </controls:BezierCurveChartControl>
 
         <StackPanel x:Name="LoadingPanel"
                     Margin="20"
