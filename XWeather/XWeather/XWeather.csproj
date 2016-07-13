@@ -40,6 +40,7 @@
     <Compile Include="Dto\CloudsDto.cs" />
     <Compile Include="Dto\CoordDto.cs" />
     <Compile Include="Dto\CurrentWeatherDto.cs" />
+    <Compile Include="Dto\DayForecastDto.cs" />
     <Compile Include="Dto\ForecastDto.cs" />
     <Compile Include="Dto\MainDto.cs" />
     <Compile Include="Dto\SysDto.cs" />
