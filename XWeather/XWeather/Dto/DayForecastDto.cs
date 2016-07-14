@@ -16,6 +16,13 @@ namespace XWeather.Dto
             
         }
 
+        public DayForecastDto(CurrentWeatherDto weather)
+        {
+            MaxTemp = weather.Main.TempMax;
+            Mintemp = weather.Main.TempMin;
+            Clouds = weather.Clouds.All;
+            ForecastTime = weather.WeatherDateTime;
+        }
 
         public double MaxTemp
         {

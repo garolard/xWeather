@@ -8,7 +8,6 @@
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:viewModels="using:XWeather.ViewModels"
                       xmlns:views="using:MvvmCross.WindowsUWP.Views"
-                      xmlns:controls="using:SimpleLineChart.Controls"
                       d:DataContext="{StaticResource DesignViewModel}"
                       mc:Ignorable="d">
 
@@ -50,24 +49,44 @@
                    Style="{StaticResource TitleTextBlockStyle}"
                    Text="{Binding CurrentWeather.Weather[0].Description}"
                    TextWrapping="Wrap" />
-
-        <controls:BezierCurveChartControl RelativePanel.Below="WeatherDescription"
-                                                RelativePanel.AlignHorizontalCenterWithPanel="True"
-                                                Margin="40,80"
-                                                PathWidth="900"
-                                                PathHeight="200"
-                                                Stroke="White"
-                                                StrokeThickness="2"
-                                                DrawValuePoints="True"
-                                                Data="{Binding CurrentDayTemperatures}">
-            <controls:BezierCurveChartControl.ValuePointDecorator>
-                <DataTemplate>
-                    <Ellipse Fill="White"
-                             Width="8"
-                             Height="8"/>
+        
+        <ListView x:Name="ForecastList"
+                  Width="600"
+                  Height="280"
+                  Margin="20"
+                  RelativePanel.Below="WeatherDescription"
+                  RelativePanel.AlignLeftWithPanel="True"
+                  ItemsSource="{Binding NextDaysForecast}">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="Padding" Value="0"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="dto:DayForecastDto">
+                    <StackPanel Width="176" 
+                                Height="256"
+                                Margin="12">
+                        <TextBlock Text="{x:Bind MaxTemp, Converter={StaticResource Temperature}}" 
+                                   HorizontalAlignment="Stretch"
+                                   TextAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" 
+                                   Foreground="White" 
+                                   FontWeight="Bold"/>
+                        <TextBlock Text="{x:Bind Mintemp, Converter={StaticResource Temperature}}" 
+                                   HorizontalAlignment="Stretch"
+                                   TextAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" 
+                                   Foreground="#A5FFFFFF" 
+                                   FontWeight="Bold" Margin="0,12,0,0"/>
+                    </StackPanel>
                 </DataTemplate>
-            </controls:BezierCurveChartControl.ValuePointDecorator>
-        </controls:BezierCurveChartControl>
+            </ListView.ItemTemplate>
+        </ListView>
 
         <StackPanel x:Name="LoadingPanel"
                     Margin="20"
