@@ -73,14 +73,26 @@
                     <StackPanel Width="176" 
                                 Height="256"
                                 Margin="12">
+                        <TextBlock Text="{x:Bind ForecastTime, Converter={StaticResource DateTimeToDayName}}"
+                                   HorizontalAlignment="Stretch"
+                                   TextAlignment="Center"
+                                   Style="{StaticResource TitleTextBlockStyle}" 
+                                   Foreground="White" />
+                        <Image Width="64"
+                               Height="64"
+                               Margin="0,32"
+                               Stretch="Uniform"
+                               Source="{x:Bind Clouds, Converter={StaticResource CloudsToWeatherImage}}"/>
                         <TextBlock Text="{x:Bind MaxTemp, Converter={StaticResource Temperature}}" 
                                    HorizontalAlignment="Stretch"
-                                   TextAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" 
+                                   TextAlignment="Center" 
+                                   Style="{StaticResource TitleTextBlockStyle}" 
                                    Foreground="White" 
                                    FontWeight="Bold"/>
                         <TextBlock Text="{x:Bind Mintemp, Converter={StaticResource Temperature}}" 
                                    HorizontalAlignment="Stretch"
-                                   TextAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" 
+                                   TextAlignment="Center" 
+                                   Style="{StaticResource TitleTextBlockStyle}" 
                                    Foreground="#A5FFFFFF" 
                                    FontWeight="Bold" Margin="0,12,0,0"/>
                     </StackPanel>

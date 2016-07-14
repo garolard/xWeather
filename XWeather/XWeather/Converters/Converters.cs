@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Globalization;
+using Windows.Globalization.DateTimeFormatting;
 using MvvmCross.Platform.Converters;
+using Windows.System.UserProfile;
 
 namespace XWeather.Converters
 {
@@ -57,6 +59,17 @@ namespace XWeather.Converters
                 return value*factor;
             else
                 return value;
+        }
+    }
+
+    public class DateTimeToDayNameConverter : MvxValueConverter<DateTime, string>
+    {
+        protected override string Convert(DateTime value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var dayOfWeek = value.DayOfWeek;
+            var language = new DateTimeFormatter("longdate", new []{"US"}).ResolvedLanguage;
+            var c = new CultureInfo(language);
+            return c.DateTimeFormat.GetAbbreviatedDayName(dayOfWeek);
         }
     }
 }

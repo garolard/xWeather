@@ -110,6 +110,9 @@
     <None Include="XWeather.Uwp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\WeatherImages\WeatherClouds.png" />
+    <Content Include="Assets\WeatherImages\WeatherPartlyCloud.png" />
+    <Content Include="Assets\WeatherImages\WeatherSun.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

@@ -105,7 +105,8 @@ namespace XWeather.ViewModels
                 {
                     MaxTemp = oneDayForecasts.Select(cw => cw.Main.TempMax).Max(),
                     Mintemp = oneDayForecasts.Select(cw => cw.Main.TempMin).Min(),
-                    Clouds = oneDayForecasts.Select(cw => cw.Clouds.All).Average()
+                    Clouds = oneDayForecasts.Select(cw => cw.Clouds.All).Average(),
+                    ForecastTime = oneDayForecasts.FirstOrDefault().WeatherDateTime
                 });
             }
 
@@ -117,7 +118,8 @@ namespace XWeather.ViewModels
                 {
                     MaxTemp = twoDayForecasts.Select(cw => cw.Main.TempMax).Max(),
                     Mintemp = twoDayForecasts.Select(cw => cw.Main.TempMin).Min(),
-                    Clouds = twoDayForecasts.Select(cw => cw.Clouds.All).Average()
+                    Clouds = twoDayForecasts.Select(cw => cw.Clouds.All).Average(),
+                    ForecastTime = twoDayForecasts.FirstOrDefault().WeatherDateTime
                 });
             }
 
@@ -129,7 +131,8 @@ namespace XWeather.ViewModels
                 {
                     MaxTemp = threeDayForecasts.Select(cw => cw.Main.TempMax).Max(),
                     Mintemp = threeDayForecasts.Select(cw => cw.Main.TempMin).Min(),
-                    Clouds = threeDayForecasts.Select(cw => cw.Clouds.All).Average()
+                    Clouds = threeDayForecasts.Select(cw => cw.Clouds.All).Average(),
+                    ForecastTime = threeDayForecasts.FirstOrDefault().WeatherDateTime
                 });
             }
         }
