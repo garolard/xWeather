@@ -13,6 +13,12 @@
     android:textColor="#ffffff"
     android:gravity="center"
     local:MvxBind="Text ForecastTime, Converter=DateTimeToDayName"/>
+  <ImageView
+    android:layout_width="64dp"
+    android:layout_height="64dp"
+    android:layout_gravity="center"
+    android:scaleType="centerInside"
+    local:MvxBind="AssetImagePath Clouds, Converter=CloudsToWeatherImage"/>
   <TextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

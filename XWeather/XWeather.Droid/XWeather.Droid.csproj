@@ -140,6 +140,15 @@
   <ItemGroup>
     <AndroidResource Include="Resources\values\Colors.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\WeatherImages\WeatherClouds.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\WeatherImages\WeatherPartlyCloud.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\WeatherImages\WeatherSun.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
 </Project>
