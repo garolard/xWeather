@@ -36,8 +36,8 @@
   <MvxRecyclerView
     android:id="@+id/ForecastList"
     android:layout_width="fill_parent"
-    android:layout_height="152dp"
-    android:layout_marginLeft="-8dp"
+    android:layout_height="188dp"
+    android:layout_marginLeft="-16dp"
     android:layout_below="@id/WeatherDescription"
     android:layout_alignParentLeft="true"
     android:layout_alignParentRight="true"
