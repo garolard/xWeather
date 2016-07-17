@@ -97,6 +97,8 @@ namespace XWeather.ViewModels
 
         private void SetNextDaysForecast(ForecastDto forecast)
         {
+            if (forecast == null) return;
+
             var oneDayForecasts =
                 forecast.List.Where(cw => cw.WeatherDateTime.Date == DateTime.Today.AddDays(1)).ToList();
             if (oneDayForecasts.Any())

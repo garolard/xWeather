@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:local="http://schemas.android.com/apk/res-auto"
-              android:id="@+id/MainContainer"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:padding="16dp">
+<RelativeLayout 
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:local="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/MainContainer"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:padding="16dp">
     <TextView
         android:id="@+id/DetectedCity"
         android:layout_width="fill_parent"
@@ -31,6 +32,17 @@
         android:textColor="@android:color/white"
         android:textAppearance="@android:style/TextAppearance.Material.Body2"
         local:MvxBind="Text CurrentWeather.Weather[0].Description" />
+
+  <!--<MvvmCross.Droid.Support.V7.RecyclerView.MvxRecyclerView
+    android:id="@+id/ForecastList"
+    android:layout_width="fill_parent"
+    android:layout_height="112dp"
+    android:layout_below="@id/WeatherDescription"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentRight="true"
+    local:MvxItemTemplate="@layout/ForecastItem"
+    local:MvxBind="ItemsSource NextDaysForecast"/>-->
+  
   <LinearLayout
       android:id="@+id/LoadingLayout"
       android:layout_margin="16dp"
