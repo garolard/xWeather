@@ -15,6 +15,11 @@
             <nativeConverters:NativeTemperatureConverter x:Key="Temperature"/>
             <nativeConverters:NativeToUpperConverter x:Key="ToUpper"/>
             <nativeConverters:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
+            <nativeConverters:NativeDateTimeToTimeConverter x:Key="DateTimeToTime"/>
+            <nativeConverters:NativeDateTimeStringToTimeStringConverter x:Key="DateTimeStringToTimeString"/>
+            <nativeConverters:NativeValueMultipliedByFactorConverter x:Key="MultipliedByFactor" />
+            <nativeConverters:CloudsToWeatherImageConverter x:Key="CloudsToWeatherImage"/>
+            <nativeConverters:NativeDateTimeToDayNameConverter x:Key="DateTimeToDayName"/>
         </ResourceDictionary>
     </Application.Resources>
 

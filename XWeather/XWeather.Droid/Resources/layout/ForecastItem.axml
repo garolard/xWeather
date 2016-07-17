@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:local="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="94dp"
+              android:layout_height="172dp"
+              android:layout_margin="16dp">
+  <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text=""
+    android:textAppearance="@android:style/TextAppearance.Material.Headline"
+    android:textColor="#ffffff"
+    android:gravity="center"
+    local:MvxBind="Text ForecastTime, Converter=DateTimeToDayName"/>
+  <ImageView
+    android:layout_width="64dp"
+    android:layout_height="64dp"
+    android:layout_gravity="center"
+    android:scaleType="centerInside"
+    local:MvxBind="AssetImagePath Clouds, Converter=CloudsToWeatherImage"/>
+  <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text=""
+    android:textAppearance="@android:style/TextAppearance.Material.Headline"
+    android:gravity="center"
+    android:textColor="#ffffff"
+    android:textStyle="bold"
+    local:MvxBind="Text MaxTemp, Converter=Temperature"/>
+  <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text=""
+    android:textAppearance="@android:style/TextAppearance.Material.Headline"
+    android:gravity="center"
+    android:textColor="#a5ffffff"
+    android:textStyle="bold"
+    local:MvxBind="Text MinTemp, Converter=Temperature"/>
+</LinearLayout>

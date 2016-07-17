@@ -1,4 +1,8 @@
-﻿using System.Threading;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
@@ -19,7 +23,7 @@ namespace XWeather.ViewModels
         private bool _isBusy;
         private string _cityName;
         private CurrentWeatherDto _currentWeather;
-        private ForecastDto _forecast;
+        private ICollection<DayForecastDto> _nextDaysForecast;
 
 
         public MainViewModel()
@@ -30,7 +34,7 @@ namespace XWeather.ViewModels
             _messenger = Mvx.Resolve<IMvxMessenger>();
 
             CurrentWeather = new CurrentWeatherDto();
-            Forecast = new ForecastDto();
+            NextDaysForecast = new ObservableCollection<DayForecastDto>();
 
             GetCurrentWeatherCommand = new MvxAsyncCommand(GetCurrentWeatherAsync);
             SendChangeBackgroundMessageCommand = new MvxCommand(SendChangeBackgroundMessage);
@@ -55,10 +59,10 @@ namespace XWeather.ViewModels
             set { _currentWeather = value; RaisePropertyChanged(); }
         }
 
-        public ForecastDto Forecast
+        public ICollection<DayForecastDto> NextDaysForecast
         {
-            get { return _forecast; }
-            set { _forecast = value; RaisePropertyChanged(); }
+            get { return _nextDaysForecast; }
+            set { _nextDaysForecast = value; RaisePropertyChanged(); }
         }
 
         public IMvxCommand GetCurrentWeatherCommand { get; }
@@ -69,7 +73,6 @@ namespace XWeather.ViewModels
         public void Init()
         {
             GetCurrentWeatherCommand.Execute();
-
         }
 
 
@@ -85,10 +88,55 @@ namespace XWeather.ViewModels
 
             if (CurrentWeather != null)
                 SendChangeBackgroundMessageCommand.Execute();
-            Forecast =
+            var forecast =
                 await
                     _forecastProvider.FindForCoordinatesAsync(currentLocation.Latitude, currentLocation.Longitude,
                         "metric", new CancellationTokenSource());
+            SetNextDaysForecast(forecast);
+        }
+
+        private void SetNextDaysForecast(ForecastDto forecast)
+        {
+            if (forecast == null) return;
+
+            var oneDayForecasts =
+                forecast.List.Where(cw => cw.WeatherDateTime.Date == DateTime.Today.AddDays(1)).ToList();
+            if (oneDayForecasts.Any())
+            {
+                NextDaysForecast.Add(new DayForecastDto()
+                {
+                    MaxTemp = oneDayForecasts.Select(cw => cw.Main.TempMax).Max(),
+                    MinTemp = oneDayForecasts.Select(cw => cw.Main.TempMin).Min(),
+                    Clouds = oneDayForecasts.Select(cw => cw.Clouds.All).Average(),
+                    ForecastTime = oneDayForecasts.FirstOrDefault().WeatherDateTime
+                });
+            }
+
+            var twoDayForecasts =
+                forecast.List.Where(cw => cw.WeatherDateTime.Date == DateTime.Today.AddDays(2)).ToList();
+            if (twoDayForecasts.Any())
+            {
+                NextDaysForecast.Add(new DayForecastDto()
+                {
+                    MaxTemp = twoDayForecasts.Select(cw => cw.Main.TempMax).Max(),
+                    MinTemp = twoDayForecasts.Select(cw => cw.Main.TempMin).Min(),
+                    Clouds = twoDayForecasts.Select(cw => cw.Clouds.All).Average(),
+                    ForecastTime = twoDayForecasts.FirstOrDefault().WeatherDateTime
+                });
+            }
+
+            var threeDayForecasts =
+                forecast.List.Where(cw => cw.WeatherDateTime.Date == DateTime.Today.AddDays(3)).ToList();
+            if (threeDayForecasts.Any())
+            {
+                NextDaysForecast.Add(new DayForecastDto()
+                {
+                    MaxTemp = threeDayForecasts.Select(cw => cw.Main.TempMax).Max(),
+                    MinTemp = threeDayForecasts.Select(cw => cw.Main.TempMin).Min(),
+                    Clouds = threeDayForecasts.Select(cw => cw.Clouds.All).Average(),
+                    ForecastTime = threeDayForecasts.FirstOrDefault().WeatherDateTime
+                });
+            }
         }
 
         private void SendChangeBackgroundMessage()

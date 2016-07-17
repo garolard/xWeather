@@ -2,7 +2,9 @@
 using Android.Content;
 using Android.Graphics;
 using Android.Graphics.Drawables;
+using Android.Support.V7.Widget;
 using Android.Widget;
+using MvvmCross.Droid.Support.V7.RecyclerView;
 using MvvmCross.Droid.Views;
 using MvvmCross.Platform;
 using MvvmCross.Plugins.Messenger;
@@ -19,8 +21,18 @@ namespace XWeather.Droid
 	    protected override void OnViewModelSet()
 	    {
             SetContentView(Resource.Layout.Main);
+
+	        SetUpHorizontalForecastList();
+
 	        _messenger = Mvx.Resolve<IMvxMessenger>();
 	        _token = _messenger.SubscribeOnMainThread<NeedChangeBackgroundColorMessage>(ChangeBackgroundColor);
+	    }
+
+	    private void SetUpHorizontalForecastList()
+	    {
+	        var layoutManager = new LinearLayoutManager(this, LinearLayoutManager.Horizontal, false);
+	        var recycler = FindViewById<MvxRecyclerView>(Resource.Id.ForecastList);
+            recycler.SetLayoutManager(layoutManager);
 	    }
 
 	    private void ChangeBackgroundColor(NeedChangeBackgroundColorMessage obj)

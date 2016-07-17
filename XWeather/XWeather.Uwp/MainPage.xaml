@@ -1,7 +1,9 @@
 ﻿<views:MvxWindowsPage x:Class="XWeather.Uwp.MainPage"
+                      x:Name="MainPageName"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:dto="using:XWeather.Dto"
                       xmlns:local="using:XWeather.Uwp"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:viewModels="using:XWeather.ViewModels"
@@ -47,22 +49,68 @@
                    Style="{StaticResource TitleTextBlockStyle}"
                    Text="{Binding CurrentWeather.Weather[0].Description}"
                    TextWrapping="Wrap" />
-        <ListView x:Name="listView"
-                  Width="0"
-                  Height="0"
-                  HorizontalAlignment="Left"
-                  VerticalAlignment="Top" />
+        
+        <ListView x:Name="ForecastList"
+                  Width="600"
+                  Height="280"
+                  Margin="20"
+                  RelativePanel.Below="WeatherDescription"
+                  RelativePanel.AlignLeftWithPanel="True"
+                  ItemsSource="{Binding NextDaysForecast}">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="Padding" Value="0"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="dto:DayForecastDto">
+                    <StackPanel Width="176" 
+                                Height="256"
+                                Margin="12">
+                        <TextBlock Text="{x:Bind ForecastTime, Converter={StaticResource DateTimeToDayName}}"
+                                   HorizontalAlignment="Stretch"
+                                   TextAlignment="Center"
+                                   Style="{StaticResource TitleTextBlockStyle}" 
+                                   Foreground="White" />
+                        <Image Width="64"
+                               Height="64"
+                               Margin="0,32"
+                               Stretch="Uniform"
+                               Source="{x:Bind Clouds, Converter={StaticResource CloudsToWeatherImage}}"/>
+                        <TextBlock Text="{x:Bind MaxTemp, Converter={StaticResource Temperature}}" 
+                                   HorizontalAlignment="Stretch"
+                                   TextAlignment="Center" 
+                                   Style="{StaticResource TitleTextBlockStyle}" 
+                                   Foreground="White" 
+                                   FontWeight="Bold"/>
+                        <TextBlock Text="{x:Bind MinTemp, Converter={StaticResource Temperature}}" 
+                                   HorizontalAlignment="Stretch"
+                                   TextAlignment="Center" 
+                                   Style="{StaticResource TitleTextBlockStyle}" 
+                                   Foreground="#A5FFFFFF" 
+                                   FontWeight="Bold" Margin="0,12,0,0"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
         <StackPanel x:Name="LoadingPanel"
                     Margin="20"
                     Orientation="Horizontal"
                     RelativePanel.AlignBottomWithPanel="True"
                     RelativePanel.AlignRightWithPanel="True"
-                    Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibility}}">
+                    Visibility="{Binding IsBusy,
+                                         Converter={StaticResource BoolToVisibility}}">
             <ProgressRing Width="32"
                           Height="32"
-                          IsActive="{Binding IsBusy}"
-                          Foreground="{ThemeResource SystemControlForegroundAccentBrush}" />
+                          Foreground="{ThemeResource SystemControlForegroundAccentBrush}"
+                          IsActive="{Binding IsBusy}" />
             <TextBlock Margin="12,0,0,0"
                        VerticalAlignment="Center"
                        Foreground="{ThemeResource SystemControlForegroundAccentBrush}"

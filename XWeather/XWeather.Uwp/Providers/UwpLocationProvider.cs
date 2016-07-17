@@ -33,8 +33,8 @@ namespace XWeather.Uwp.Providers
                     var position = await _locator.GetGeopositionAsync();
                     return new GeoLocation()
                     {
-                        Latitude = position.Coordinate.Latitude,
-                        Longitude = position.Coordinate.Longitude
+                        Latitude = position.Coordinate.Point.Position.Latitude,
+                        Longitude = position.Coordinate.Point.Position.Longitude
                     };
                 default:
                     return null;
@@ -76,8 +76,8 @@ namespace XWeather.Uwp.Providers
         {
             var position = new GeoLocation()
             {
-                Latitude = args.Position.Coordinate.Latitude,
-                Longitude = args.Position.Coordinate.Longitude
+                Latitude = args.Position.Coordinate.Point.Position.Latitude,
+                Longitude = args.Position.Coordinate.Point.Position.Longitude
             };
             PositionChanged?.Invoke(this, new PositionEventArgs(position));
         }
