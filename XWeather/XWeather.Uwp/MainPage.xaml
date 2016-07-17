@@ -89,7 +89,7 @@
                                    Style="{StaticResource TitleTextBlockStyle}" 
                                    Foreground="White" 
                                    FontWeight="Bold"/>
-                        <TextBlock Text="{x:Bind Mintemp, Converter={StaticResource Temperature}}" 
+                        <TextBlock Text="{x:Bind MinTemp, Converter={StaticResource Temperature}}" 
                                    HorizontalAlignment="Stretch"
                                    TextAlignment="Center" 
                                    Style="{StaticResource TitleTextBlockStyle}" 

@@ -25,16 +25,8 @@ namespace XWeather.Uwp.NativeConverters
     public class NativeValueMultipliedByFactorConverter : MvxNativeValueConverter<ValueMultipliedByFactorConverter>
     { }
 
-    public class DateTimeToDayNameConverter : MvxValueConverter<DateTime, string>
-    {
-        protected override string Convert(DateTime value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var dayOfWeek = value.DayOfWeek;
-            var language = new DateTimeFormatter("longdate", new[] { "US" }).ResolvedLanguage;
-            var c = new CultureInfo(language);
-            return c.DateTimeFormat.GetAbbreviatedDayName(dayOfWeek);
-        }
-    }
+    public class NativeDateTimeToDayNameConverter : MvxNativeValueConverter<DateTimeToDayNameConverter>
+    { }
 
     public class BoolToVisibilityConverter : IValueConverter
     {

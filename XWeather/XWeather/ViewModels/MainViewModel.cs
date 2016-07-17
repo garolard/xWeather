@@ -106,7 +106,7 @@ namespace XWeather.ViewModels
                 NextDaysForecast.Add(new DayForecastDto()
                 {
                     MaxTemp = oneDayForecasts.Select(cw => cw.Main.TempMax).Max(),
-                    Mintemp = oneDayForecasts.Select(cw => cw.Main.TempMin).Min(),
+                    MinTemp = oneDayForecasts.Select(cw => cw.Main.TempMin).Min(),
                     Clouds = oneDayForecasts.Select(cw => cw.Clouds.All).Average(),
                     ForecastTime = oneDayForecasts.FirstOrDefault().WeatherDateTime
                 });
@@ -119,7 +119,7 @@ namespace XWeather.ViewModels
                 NextDaysForecast.Add(new DayForecastDto()
                 {
                     MaxTemp = twoDayForecasts.Select(cw => cw.Main.TempMax).Max(),
-                    Mintemp = twoDayForecasts.Select(cw => cw.Main.TempMin).Min(),
+                    MinTemp = twoDayForecasts.Select(cw => cw.Main.TempMin).Min(),
                     Clouds = twoDayForecasts.Select(cw => cw.Clouds.All).Average(),
                     ForecastTime = twoDayForecasts.FirstOrDefault().WeatherDateTime
                 });
@@ -132,7 +132,7 @@ namespace XWeather.ViewModels
                 NextDaysForecast.Add(new DayForecastDto()
                 {
                     MaxTemp = threeDayForecasts.Select(cw => cw.Main.TempMax).Max(),
-                    Mintemp = threeDayForecasts.Select(cw => cw.Main.TempMin).Min(),
+                    MinTemp = threeDayForecasts.Select(cw => cw.Main.TempMin).Min(),
                     Clouds = threeDayForecasts.Select(cw => cw.Clouds.All).Average(),
                     ForecastTime = threeDayForecasts.FirstOrDefault().WeatherDateTime
                 });

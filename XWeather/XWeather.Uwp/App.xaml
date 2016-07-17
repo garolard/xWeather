@@ -19,7 +19,7 @@
             <nativeConverters:NativeDateTimeStringToTimeStringConverter x:Key="DateTimeStringToTimeString"/>
             <nativeConverters:NativeValueMultipliedByFactorConverter x:Key="MultipliedByFactor" />
             <nativeConverters:CloudsToWeatherImageConverter x:Key="CloudsToWeatherImage"/>
-            <nativeConverters:DateTimeToDayNameConverter x:Key="DateTimeToDayName"/>
+            <nativeConverters:NativeDateTimeToDayNameConverter x:Key="DateTimeToDayName"/>
         </ResourceDictionary>
     </Application.Resources>
 

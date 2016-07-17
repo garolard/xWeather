@@ -6,7 +6,7 @@ namespace XWeather.Dto
     public class DayForecastDto : MvxViewModel
     {
         private double _maxTemp;
-        private double _mintemp;
+        private double _minTemp;
         private double _clouds;
         private DateTime _forecastTime;
 
@@ -19,7 +19,7 @@ namespace XWeather.Dto
         public DayForecastDto(CurrentWeatherDto weather)
         {
             MaxTemp = weather.Main.TempMax;
-            Mintemp = weather.Main.TempMin;
+            MinTemp = weather.Main.TempMin;
             Clouds = weather.Clouds.All;
             ForecastTime = weather.WeatherDateTime;
         }
@@ -30,10 +30,10 @@ namespace XWeather.Dto
             set { _maxTemp = value; RaisePropertyChanged(); }
         }
 
-        public double Mintemp
+        public double MinTemp
         {
-            get { return _mintemp; }
-            set { _mintemp = value; RaisePropertyChanged(); }
+            get { return _minTemp; }
+            set { _minTemp = value; RaisePropertyChanged(); }
         }
 
         public double Clouds
