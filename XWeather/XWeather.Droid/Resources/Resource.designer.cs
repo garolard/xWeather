@@ -206,7 +206,10 @@ namespace XWeather.Droid
 			public const int DetectedCity = 2131034116;
 			
 			// aapt resource value: 0x7f050007
-			public const int LoadingLayout = 2131034119;
+			public const int ForecastList = 2131034119;
+			
+			// aapt resource value: 0x7f050008
+			public const int LoadingLayout = 2131034120;
 			
 			// aapt resource value: 0x7f050003
 			public const int MainContainer = 2131034115;
@@ -237,7 +240,7 @@ namespace XWeather.Droid
 		{
 			
 			// aapt resource value: 0x7f030000
-			public const int ForecastItem = 2130903040;
+			public const int forecastitem = 2130903040;
 			
 			// aapt resource value: 0x7f030001
 			public const int Main = 2130903041;

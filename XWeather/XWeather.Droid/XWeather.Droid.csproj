@@ -117,7 +117,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Assets\AboutAssets.txt" />
-    <AndroidResource Include="Resources\layout\ForecastItem.axml">
+    <AndroidResource Include="Resources\layout\forecastitem.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
