@@ -99,44 +99,58 @@ namespace XWeather.ViewModels
         {
             if (forecast == null) return;
 
-            var oneDayForecasts =
-                forecast.List.Where(cw => cw.WeatherDateTime.Date == DateTime.Today.AddDays(1)).ToList();
-            if (oneDayForecasts.Any())
+            var dailyForecast = forecast.List.GroupBy(cwd => cwd.WeatherDateTime.Date);
+
+            foreach (var forecastGroup in dailyForecast)
             {
-                NextDaysForecast.Add(new DayForecastDto()
+                var dayForecastDto = new DayForecastDto()
                 {
-                    MaxTemp = oneDayForecasts.Select(cw => cw.Main.TempMax).Max(),
-                    MinTemp = oneDayForecasts.Select(cw => cw.Main.TempMin).Min(),
-                    Clouds = oneDayForecasts.Select(cw => cw.Clouds.All).Average(),
-                    ForecastTime = oneDayForecasts.FirstOrDefault().WeatherDateTime
-                });
+                    MaxTemp = forecastGroup.Select(cw => cw.Main.TempMax).Max(),
+                    MinTemp = forecastGroup.Select(cw => cw.Main.TempMin).Min(),
+                    Clouds = forecastGroup.Select(cw => cw.Clouds.All).Average(),
+                    ForecastTime = forecastGroup.FirstOrDefault().WeatherDateTime
+                };
+                NextDaysForecast.Add(dayForecastDto);
             }
 
-            var twoDayForecasts =
-                forecast.List.Where(cw => cw.WeatherDateTime.Date == DateTime.Today.AddDays(2)).ToList();
-            if (twoDayForecasts.Any())
-            {
-                NextDaysForecast.Add(new DayForecastDto()
-                {
-                    MaxTemp = twoDayForecasts.Select(cw => cw.Main.TempMax).Max(),
-                    MinTemp = twoDayForecasts.Select(cw => cw.Main.TempMin).Min(),
-                    Clouds = twoDayForecasts.Select(cw => cw.Clouds.All).Average(),
-                    ForecastTime = twoDayForecasts.FirstOrDefault().WeatherDateTime
-                });
-            }
+            //var oneDayForecasts =
+            //    forecast.List.Where(cw => cw.WeatherDateTime.Date == DateTime.Today.AddDays(1)).ToList();
+            //if (oneDayForecasts.Any())
+            //{
+            //    NextDaysForecast.Add(new DayForecastDto()
+            //    {
+            //        MaxTemp = oneDayForecasts.Select(cw => cw.Main.TempMax).Max(),
+            //        MinTemp = oneDayForecasts.Select(cw => cw.Main.TempMin).Min(),
+            //        Clouds = oneDayForecasts.Select(cw => cw.Clouds.All).Average(),
+            //        ForecastTime = oneDayForecasts.FirstOrDefault().WeatherDateTime
+            //    });
+            //}
 
-            var threeDayForecasts =
-                forecast.List.Where(cw => cw.WeatherDateTime.Date == DateTime.Today.AddDays(3)).ToList();
-            if (threeDayForecasts.Any())
-            {
-                NextDaysForecast.Add(new DayForecastDto()
-                {
-                    MaxTemp = threeDayForecasts.Select(cw => cw.Main.TempMax).Max(),
-                    MinTemp = threeDayForecasts.Select(cw => cw.Main.TempMin).Min(),
-                    Clouds = threeDayForecasts.Select(cw => cw.Clouds.All).Average(),
-                    ForecastTime = threeDayForecasts.FirstOrDefault().WeatherDateTime
-                });
-            }
+            //var twoDayForecasts =
+            //    forecast.List.Where(cw => cw.WeatherDateTime.Date == DateTime.Today.AddDays(2)).ToList();
+            //if (twoDayForecasts.Any())
+            //{
+            //    NextDaysForecast.Add(new DayForecastDto()
+            //    {
+            //        MaxTemp = twoDayForecasts.Select(cw => cw.Main.TempMax).Max(),
+            //        MinTemp = twoDayForecasts.Select(cw => cw.Main.TempMin).Min(),
+            //        Clouds = twoDayForecasts.Select(cw => cw.Clouds.All).Average(),
+            //        ForecastTime = twoDayForecasts.FirstOrDefault().WeatherDateTime
+            //    });
+            //}
+
+            //var threeDayForecasts =
+            //    forecast.List.Where(cw => cw.WeatherDateTime.Date == DateTime.Today.AddDays(3)).ToList();
+            //if (threeDayForecasts.Any())
+            //{
+            //    NextDaysForecast.Add(new DayForecastDto()
+            //    {
+            //        MaxTemp = threeDayForecasts.Select(cw => cw.Main.TempMax).Max(),
+            //        MinTemp = threeDayForecasts.Select(cw => cw.Main.TempMin).Min(),
+            //        Clouds = threeDayForecasts.Select(cw => cw.Clouds.All).Average(),
+            //        ForecastTime = threeDayForecasts.FirstOrDefault().WeatherDateTime
+            //    });
+            //}
         }
 
         private void SendChangeBackgroundMessage()

@@ -51,12 +51,15 @@
                    TextWrapping="Wrap" />
         
         <ListView x:Name="ForecastList"
-                  Width="600"
                   Height="280"
                   Margin="20"
+                  HorizontalAlignment="Stretch"
+                  ItemsSource="{Binding NextDaysForecast}"
                   RelativePanel.Below="WeatherDescription"
-                  RelativePanel.AlignLeftWithPanel="True"
-                  ItemsSource="{Binding NextDaysForecast}">
+                  RelativePanel.AlignLeftWithPanel="True" SelectionMode="None" 
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto" 
+                  ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                  ScrollViewer.HorizontalScrollMode="Enabled">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <VirtualizingStackPanel Orientation="Horizontal"/>
@@ -94,7 +97,7 @@
                                    TextAlignment="Center" 
                                    Style="{StaticResource TitleTextBlockStyle}" 
                                    Foreground="#A5FFFFFF" 
-                                   FontWeight="Bold" Margin="0,12,0,0"/>
+                                   FontWeight="Bold" Margin="0,12,0,0" FontSize="22"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
