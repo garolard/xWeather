@@ -184,7 +184,13 @@ namespace XWeather.Droid
 		{
 			
 			// aapt resource value: 0x7f020000
-			public const int Icon = 2130837504;
+			public const int ConditionHumidity = 2130837504;
+			
+			// aapt resource value: 0x7f020001
+			public const int ConditionWind = 2130837505;
+			
+			// aapt resource value: 0x7f020002
+			public const int Icon = 2130837506;
 			
 			static Drawable()
 			{
@@ -205,11 +211,14 @@ namespace XWeather.Droid
 			// aapt resource value: 0x7f050004
 			public const int DetectedCity = 2131034116;
 			
-			// aapt resource value: 0x7f050007
-			public const int ForecastList = 2131034119;
+			// aapt resource value: 0x7f050009
+			public const int ForecastList = 2131034121;
 			
 			// aapt resource value: 0x7f050008
-			public const int LoadingLayout = 2131034120;
+			public const int HumidityPanel = 2131034120;
+			
+			// aapt resource value: 0x7f05000a
+			public const int LoadingLayout = 2131034122;
 			
 			// aapt resource value: 0x7f050003
 			public const int MainContainer = 2131034115;
@@ -222,6 +231,9 @@ namespace XWeather.Droid
 			
 			// aapt resource value: 0x7f050006
 			public const int WeatherDescription = 2131034118;
+			
+			// aapt resource value: 0x7f050007
+			public const int WindPanel = 2131034119;
 			
 			// aapt resource value: 0x7f050000
 			public const int item_touch_helper_previous_elevation = 2131034112;
