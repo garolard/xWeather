@@ -110,6 +110,8 @@
     <None Include="XWeather.Uwp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\ConditionImages\ConditionWind.png" />
+    <Content Include="Assets\ConditionImages\ConditionHumidity.png" />
     <Content Include="Assets\WeatherImages\WeatherClouds.png" />
     <Content Include="Assets\WeatherImages\WeatherPartlyCloud.png" />
     <Content Include="Assets\WeatherImages\WeatherSun.png" />

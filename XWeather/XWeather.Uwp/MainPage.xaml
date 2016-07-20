@@ -49,6 +49,44 @@
                    Style="{StaticResource TitleTextBlockStyle}"
                    Text="{Binding CurrentWeather.Weather[0].Description}"
                    TextWrapping="Wrap" />
+
+        <StackPanel x:Name="WindPanel"
+                    Orientation="Horizontal"
+                    Margin="20,80,0,0"
+                    RelativePanel.RightOf="CurrentTemperature"
+                    RelativePanel.AlignTopWith="DetectedCity">
+            <Image Source="../Assets/ConditionImages/ConditionWind.png"
+                   Width="20"
+                   Height="20"
+                   Margin="0,4,12,0"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   Stretch="Uniform" />
+            <TextBlock Text="{Binding CurrentWeather.Wind.Speed, 
+                                      Converter={StaticResource CustomSuffixedDouble}, 
+                                      ConverterParameter='km/h'}"
+                       Style="{StaticResource TitleTextBlockStyle}" 
+                       Foreground="White"/>
+        </StackPanel>
+
+        <StackPanel x:Name="HumidityPanel"
+                    Orientation="Horizontal"
+                    Margin="20,8,0,0"
+                    RelativePanel.Below="WindPanel"
+                    RelativePanel.AlignLeftWith="WindPanel">
+            <Image Source="../Assets/ConditionImages/ConditionHumidity.png"
+                   Width="20"
+                   Height="20"
+                   Margin="0,4,12,0"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   Stretch="Uniform" />
+            <TextBlock Text="{Binding CurrentWeather.Main.Humidity,
+                                      Converter={StaticResource CustomSuffixedDouble},
+                                      ConverterParameter='%'}"
+                       Style="{StaticResource TitleTextBlockStyle}" 
+                       Foreground="White"/>
+        </StackPanel>
         
         <ListView x:Name="ForecastList"
                   Height="280"

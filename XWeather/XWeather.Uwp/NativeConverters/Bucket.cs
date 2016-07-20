@@ -28,6 +28,9 @@ namespace XWeather.Uwp.NativeConverters
     public class NativeDateTimeToDayNameConverter : MvxNativeValueConverter<DateTimeToDayNameConverter>
     { }
 
+    public class NativeCustomSuffixedDoubleConverter : MvxNativeValueConverter<CustomSuffixedDoubleConverter>
+    { }
+
     public class BoolToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)

@@ -64,7 +64,15 @@ namespace XWeather.Converters
     {
         protected override string Convert(DateTime value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value.ToString("ddd");
+            return value.ToString("ddd", CultureInfo.CurrentUICulture);
+        }
+    }
+
+    public class CustomSuffixedDoubleConverter : MvxValueConverter<double, string>
+    {
+        protected override string Convert(double value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return $"{value} {parameter}";
         }
     }
 }
