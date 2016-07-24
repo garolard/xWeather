@@ -55,7 +55,7 @@
       android:textAppearance="@android:style/TextAppearance.Material.Subhead"
       android:gravity="center"
       android:textColor="#ffffff"
-      local:MvxBind="Text CurrentWeather.Wind.Speed, Converter=CustomSuffixedDouble, ConverterParameter='km/h'"/>
+      local:MvxBind="Text CurrentWeather.Wind.Speed, Converter=CustomSuffixedDouble, ConverterParameter='m/s'"/>
   </LinearLayout>
 
   <LinearLayout

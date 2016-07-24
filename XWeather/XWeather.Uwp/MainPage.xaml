@@ -24,7 +24,7 @@
 
     <RelativePanel x:Name="RootContainer" Background="{StaticResource ContainerBrush}">
         <TextBlock x:Name="DetectedCity"
-                   Margin="20,40,0,0"
+                   Margin="100,40,0,0"
                    FontFamily="Segoe UI Black"
                    FontWeight="Bold"
                    Foreground="White"
@@ -33,7 +33,7 @@
                                   Converter={StaticResource ToUpper}}"
                    TextWrapping="Wrap" />
         <TextBlock x:Name="CurrentTemperature"
-                   Margin="20,40,0,0"
+                   Margin="100,40,0,0"
                    FontSize="136"
                    Foreground="White"
                    Style="{StaticResource HeaderTextBlockStyle}"
@@ -41,7 +41,7 @@
                                   Converter={StaticResource Temperature}}"
                    TextWrapping="Wrap" />
         <TextBlock x:Name="WeatherDescription"
-                   Margin="20,-20,0,0"
+                   Margin="100,-20,0,0"
                    FontSize="22"
                    Foreground="White"
                    RelativePanel.AlignLeftWith="CurrentTemperature"
@@ -64,7 +64,7 @@
                    Stretch="Uniform" />
             <TextBlock Text="{Binding CurrentWeather.Wind.Speed, 
                                       Converter={StaticResource CustomSuffixedDouble}, 
-                                      ConverterParameter='km/h'}"
+                                      ConverterParameter='m/s'}"
                        Style="{StaticResource TitleTextBlockStyle}" 
                        Foreground="White"/>
         </StackPanel>
@@ -87,7 +87,45 @@
                        Style="{StaticResource TitleTextBlockStyle}" 
                        Foreground="White"/>
         </StackPanel>
+
         
+        <StackPanel x:Name="SunrisePanel"
+                    Orientation="Horizontal"
+                    Margin="20,80,0,0"
+                    RelativePanel.RightOf="WindPanel"
+                    RelativePanel.AlignTopWith="WindPanel">
+            <Image Source="Assets/Sunrise.png"
+                   Stretch="Uniform"
+                   Width="28"
+                   Height="28"
+                   Margin="0,2,12,0"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding CurrentWeather.Sys.SunriseDateTime, 
+                                      Converter={StaticResource DateTimeToTime}}"
+                       Style="{StaticResource TitleTextBlockStyle}" 
+                       Foreground="White"/>
+        </StackPanel>
+
+        <StackPanel x:Name="SunsetPanel"
+                    Orientation="Horizontal"
+                    Margin="20,8,0,0"
+                    RelativePanel.Below="SunrisePanel"
+                    RelativePanel.AlignLeftWith="SunrisePanel">
+            <Image Source="Assets/Sunset.png"
+                   Stretch="Uniform"
+                   Width="28"
+                   Height="28"
+                   Margin="0,2,12,0"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding CurrentWeather.Sys.SunsetDateTime, 
+                                      Converter={StaticResource DateTimeToTime}}"
+                       Style="{StaticResource TitleTextBlockStyle}" 
+                       Foreground="White"/>
+        </StackPanel>
+
+
         <ListView x:Name="ForecastList"
                   Height="280"
                   Margin="20"
@@ -98,6 +136,11 @@
                   ScrollViewer.HorizontalScrollBarVisibility="Auto" 
                   ScrollViewer.VerticalScrollBarVisibility="Disabled"
                   ScrollViewer.HorizontalScrollMode="Enabled">
+            <ListView.Transitions>
+                <TransitionCollection>
+                    <AddDeleteThemeTransition/>
+                </TransitionCollection>
+            </ListView.Transitions>
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <VirtualizingStackPanel Orientation="Horizontal"/>
@@ -140,7 +183,8 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-
+        
+        
         <StackPanel x:Name="LoadingPanel"
                     Margin="20"
                     Orientation="Horizontal"

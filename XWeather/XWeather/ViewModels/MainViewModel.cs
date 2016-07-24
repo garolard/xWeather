@@ -83,7 +83,6 @@ namespace XWeather.ViewModels
             var currentLocation = await _locationProvider.GetPositionAsync();
             CurrentWeather =
                 await _weatherProvider.FindForCoordinatesAsync(currentLocation.Latitude, currentLocation.Longitude, "metric", new CancellationTokenSource());
-
             IsBusy = false;
 
             if (CurrentWeather != null)
@@ -112,45 +111,6 @@ namespace XWeather.ViewModels
                 };
                 NextDaysForecast.Add(dayForecastDto);
             }
-
-            //var oneDayForecasts =
-            //    forecast.List.Where(cw => cw.WeatherDateTime.Date == DateTime.Today.AddDays(1)).ToList();
-            //if (oneDayForecasts.Any())
-            //{
-            //    NextDaysForecast.Add(new DayForecastDto()
-            //    {
-            //        MaxTemp = oneDayForecasts.Select(cw => cw.Main.TempMax).Max(),
-            //        MinTemp = oneDayForecasts.Select(cw => cw.Main.TempMin).Min(),
-            //        Clouds = oneDayForecasts.Select(cw => cw.Clouds.All).Average(),
-            //        ForecastTime = oneDayForecasts.FirstOrDefault().WeatherDateTime
-            //    });
-            //}
-
-            //var twoDayForecasts =
-            //    forecast.List.Where(cw => cw.WeatherDateTime.Date == DateTime.Today.AddDays(2)).ToList();
-            //if (twoDayForecasts.Any())
-            //{
-            //    NextDaysForecast.Add(new DayForecastDto()
-            //    {
-            //        MaxTemp = twoDayForecasts.Select(cw => cw.Main.TempMax).Max(),
-            //        MinTemp = twoDayForecasts.Select(cw => cw.Main.TempMin).Min(),
-            //        Clouds = twoDayForecasts.Select(cw => cw.Clouds.All).Average(),
-            //        ForecastTime = twoDayForecasts.FirstOrDefault().WeatherDateTime
-            //    });
-            //}
-
-            //var threeDayForecasts =
-            //    forecast.List.Where(cw => cw.WeatherDateTime.Date == DateTime.Today.AddDays(3)).ToList();
-            //if (threeDayForecasts.Any())
-            //{
-            //    NextDaysForecast.Add(new DayForecastDto()
-            //    {
-            //        MaxTemp = threeDayForecasts.Select(cw => cw.Main.TempMax).Max(),
-            //        MinTemp = threeDayForecasts.Select(cw => cw.Main.TempMin).Min(),
-            //        Clouds = threeDayForecasts.Select(cw => cw.Clouds.All).Average(),
-            //        ForecastTime = threeDayForecasts.FirstOrDefault().WeatherDateTime
-            //    });
-            //}
         }
 
         private void SendChangeBackgroundMessage()

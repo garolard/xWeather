@@ -1,4 +1,5 @@
-﻿using MvvmCross.Core.ViewModels;
+﻿using System;
+using MvvmCross.Core.ViewModels;
 using XWeather.Entities;
 
 namespace XWeather.Dto
@@ -9,8 +10,8 @@ namespace XWeather.Dto
         private int _id;
         private double _message;
         private string _country;
-        private int _sunrise;
-        private int _sunset;
+        private long _sunrise;
+        private long _sunset;
 
         public SysDto()
         {
@@ -51,16 +52,36 @@ namespace XWeather.Dto
             set { _country = value; RaisePropertyChanged(); }
         }
 
-        public int Sunrise
+        public long Sunrise
         {
             get { return _sunrise; }
             set { _sunrise = value; RaisePropertyChanged(); }
         }
 
-        public int Sunset
+        public long Sunset
         {
             get { return _sunset; }
             set { _sunset = value; RaisePropertyChanged(); }
+        }
+
+        public DateTime SunriseDateTime
+        {
+            get
+            {
+                var baseDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+                var result = baseDateTime.AddSeconds(Sunrise).ToLocalTime();
+                return result;
+            }
+        }
+
+        public DateTime SunsetDateTime
+        {
+            get
+            {
+                var baseDateTime = new DateTime(1907, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+                var result = baseDateTime.AddSeconds(Sunset).ToLocalTime();
+                return result;
+            }
         }
     }
 }
